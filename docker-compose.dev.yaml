@@ -1,0 +1,69 @@
+services:
+  server:
+    container_name: syncpasta-server
+    build:
+      context: ./server
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./server:/app
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env.dev
+    depends_on:
+      - db
+
+  client:
+    container_name: syncpasta-client
+    build:
+      context: ./client
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./client:/app
+    ports:
+      - "5173:5173"
+    depends_on:
+      - server
+      - firebase
+
+  db:
+    container_name: syncpasta-db
+    image: postgres:latest
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - "5432:5432"
+
+  firebase:
+    container_name: syncpasta-firebase
+    environment:
+      FIREBASE_PROJECT_ID: ${FIREBASE_PROJECT_ID}
+    build:
+      context: ./firebase
+      dockerfile: Dockerfile
+    ports:
+      - "4000:4000"
+      - "9099:9099"
+      - "4500:4500"
+
+  s3:
+    container_name: syncpasta-s3
+    image: minio/minio
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    environment:
+      MINIO_ROOT_USER: ${S3_ACCESS_KEY_ID}
+      MINIO_ROOT_PASSWORD: ${S3_SECRET_ACCESS_KEY}
+    volumes:
+      - "~/minio/data:/data"
+    command: server /data --console-address ":9001"
+
+
+volumes:
+  db_data:
+    driver: local

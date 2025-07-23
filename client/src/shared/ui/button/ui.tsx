@@ -1,0 +1,44 @@
+"use client";
+
+import { ExternalLink } from "lucide-react";
+import Link from "next/link";
+import { motion } from "motion/react";
+
+interface ButtonProps {
+  children: React.ReactNode;
+  variant?: "link" | "primary" | "dangerous";
+  element?: "button" | "link";
+  className?: string;
+  onClick?: () => void;
+  href?: string;
+  target?: "_blank" | "_self";
+  type?: "button" | "submit" | "reset";
+}
+
+const DEFAULT_ELEMENT = "button";
+export const Button = (props: ButtonProps) => {
+  const Element =
+    props.element === "link" ? Link : props.element || DEFAULT_ELEMENT;
+
+  return (
+    <motion.div
+      className={`rounded bg-neutral-800 hover:bg-neutral-700 cursor-pointer py-2 px-3 text-sm w-full font-light ${
+        props.className || ""
+      }`}
+      whileTap={{ scale: 0.98 }}
+      transition={{ duration: 0.05 }}
+      onClick={props.onClick}
+    >
+      <Element href={props.href || "#"} target={props.target} type={props.type}>
+        <span
+          className={`flex items-center gap-1 cursor-pointer ${
+            props.variant === "dangerous" && "text-red-400"
+          }`}
+        >
+          {props.variant === "link" ? <ExternalLink size={18} /> : null}
+          {props.children}
+        </span>
+      </Element>
+    </motion.div>
+  );
+};
