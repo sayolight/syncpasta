@@ -3,7 +3,7 @@ import { Repository } from 'typeorm';
 import { Pasta } from './entities/pasta.entity';
 import { CreatePastaDto } from './dto/create-pasta.dto';
 import * as firebaseAdmin from 'firebase-admin';
-import { StorageService } from '../storage/storage.service';
+import { StorageService } from '../../core/storage/storage.service';
 
 @Injectable()
 export class PastaService {

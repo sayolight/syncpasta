@@ -1,4 +1,4 @@
-import { Pasta } from 'src/pasta/entities/pasta.entity';
+import { Pasta } from 'src/modules/pasta/entities/pasta.entity';
 import { Entity, OneToMany, PrimaryColumn } from 'typeorm';
 
 @Entity()

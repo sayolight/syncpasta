@@ -11,7 +11,7 @@ import {
 } from '@nestjs/common';
 import { PastaService } from './pasta.service';
 import { CreatePastaDto } from './dto/create-pasta.dto';
-import { AuthGuard } from 'src/firebase/auth.guard';
+import { AuthGuard } from 'src/core/firebase/auth.guard';
 import { Request } from 'express';
 import { FileInterceptor } from '@nestjs/platform-express';
 

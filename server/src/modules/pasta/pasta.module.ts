@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
 import { PastaService } from './pasta.service';
 import { PastaController } from './pasta.controller';
-import { DatabaseModule } from 'src/database/database.module';
+import { DatabaseModule } from 'src/core/database/database.module';
 import { pastaProviders } from './pasta.providers';
-import { FirebaseModule } from 'src/firebase/firebase.module';
-import { StorageModule } from '../storage/storage.module';
+import { FirebaseModule } from 'src/core/firebase/firebase.module';
+import { StorageModule } from '../../core/storage/storage.module';
 
 @Module({
   imports: [DatabaseModule, FirebaseModule, StorageModule],
