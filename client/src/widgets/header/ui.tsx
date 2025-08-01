@@ -14,7 +14,7 @@ export const Header = () => {
         <NavLink className="hover:underline" to="/gallery">
           Gallery
         </NavLink>
-        <NavLink className="font-semibold hover:underline" to="/login">
+        <NavLink className="font-semibold hover:underline" to="/auth">
           Login
         </NavLink>
       </nav>

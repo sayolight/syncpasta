@@ -1,5 +1,6 @@
 "use client";
 
+import * as React from "react";
 import { X } from "lucide-react";
 import { motion } from "motion/react";
 import { useEffect } from "react";
@@ -50,7 +51,9 @@ export const Modal = (props: ModalProps) => {
                 <X size={14} />
               </span>
             </div>
-            {props.children}
+            <div className={"flex flex-col gap-2"}>
+                {props.children}
+            </div>
           </div>
         </motion.div>
       )}
