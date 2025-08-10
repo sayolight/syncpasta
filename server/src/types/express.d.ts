@@ -1,8 +1,8 @@
 import 'express';
-import { DecodedIdToken } from 'firebase-admin/lib/auth/token-verifier';
 
 declare module 'express' {
   export interface Request {
-    user?: DecodedIdToken;
+    // user?: DecodedIdToken;
+    user?: { uid: string };
   }
 }

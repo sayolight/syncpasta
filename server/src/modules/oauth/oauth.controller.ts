@@ -9,7 +9,7 @@ import {
 } from '@nestjs/common';
 import { CreateOAuthClientDto } from './dto/create-oauth-client.dto';
 import { OAuthService } from './oauth.service';
-import { AuthGuard } from '../../core/firebase/auth.guard';
+import { AuthGuard } from '../../modules/auth/auth.guard';
 import { Request } from 'express';
 
 @Controller('oauth')

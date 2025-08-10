@@ -1,9 +1,9 @@
 import {
-  Injectable,
   CanActivate,
   ExecutionContext,
-  UnauthorizedException,
   Inject,
+  Injectable,
+  UnauthorizedException,
 } from '@nestjs/common';
 import * as firebaseAdmin from 'firebase-admin';
 import { Request } from 'express';
@@ -38,7 +38,7 @@ export class AuthGuard implements CanActivate {
         throw new UnauthorizedException('Invalid token');
       });
 
-    request['user'] = decodedToken;
+    request['user'] = { uid: decodedToken.uid };
 
     const userInDb = await this.usersService.findOne(decodedToken.uid);
 
