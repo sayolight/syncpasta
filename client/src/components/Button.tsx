@@ -23,7 +23,9 @@ export const Button = (props: ButtonProps) => {
 
   return (
     <motion.div
-      className={`bg-surface-base text-base hover:bg-surface-base-hover hover:text-base-hover cursor-pointer rounded transition py-2 px-3 text-sm w-full font-light text-${
+      className={`bg-surface-base text-${
+        props.variant === "dangerous" ? "red-400" : "base"
+      } hover:bg-surface-base-hover hover:text-base-hover cursor-pointer rounded transition py-2 px-3 text-sm w-full font-light text-${
         props.textAlign ?? "left"
       } ${props.className || ""}`}
       whileTap={{ scale: 0.99 }}
@@ -31,11 +33,7 @@ export const Button = (props: ButtonProps) => {
       onClick={props.onClick}
     >
       <Element href={props.href || "#"} target={props.target} type={props.type}>
-        <span
-          className={`flex items-center gap-1 cursor-pointer ${
-            props.variant === "dangerous" && "text-red-400"
-          }`}
-        >
+        <span className={`flex items-center gap-1 cursor-pointer`}>
           {props.variant === "link" ? <ExternalLink size={18} /> : null}
           {props.children}
         </span>
