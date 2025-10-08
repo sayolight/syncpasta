@@ -39,8 +39,8 @@ export const Modal = (props: ModalProps) => {
             className={`fixed inset-0 z-2 cursor-pointer`}
             onClick={props.onClose}
           />
-          <div className="bg-neutral-900 z-3 p-4 rounded shadow-lg md:w-1/3 w-full max-w-md">
-            <div className="flex items-center justify-between mb-2 text-neutral-400">
+          <div className="bg-neutral-800 z-3 p-4 rounded shadow-lg md:w-1/3 w-full max-w-md">
+            <div className="flex items-center justify-between mb-2 text-neutral">
               <span className="font-bold text-sm select-none">
                 {props.title}
               </span>
@@ -51,9 +51,7 @@ export const Modal = (props: ModalProps) => {
                 <X size={14} />
               </span>
             </div>
-            <div className={"flex flex-col gap-2"}>
-                {props.children}
-            </div>
+            <div className={"flex flex-col gap-2"}>{props.children}</div>
           </div>
         </motion.div>
       )}

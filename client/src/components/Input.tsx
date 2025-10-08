@@ -1,6 +1,7 @@
 import * as React from "react";
 
 interface InputProps {
+  title?: string;
   type?: "text" | "password" | "email" | "number";
   placeholder?: string;
   className?: string;
@@ -11,11 +12,14 @@ interface InputProps {
 
 export const Input = (props: InputProps) => {
   return (
-    <input
-      {...props}
-      className={`bg-neutral-800 text-neutral-200 rounded p-2 w-full outline-none ${
-        props.className || ""
-      }`}
-    />
+    <div className="flex flex-col gap-0 w-full">
+      <span className="text-sm">{props.title}</span>
+      <input
+        {...props}
+        className={`bg-surface-muted rounded py-2 px-3 w-full outline-none ${
+          props.className || ""
+        }`}
+      />
+    </div>
   );
 };

@@ -1,0 +1,33 @@
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap");
+@import "tailwindcss";
+
+@theme inline {
+  --color-bg: #171717;
+  --color-fg: #d2c6b2;
+
+  --color-surface-base: #414141;
+  --color-surface-muted: #3a3a3a;
+  --color-surface-base-hover: #d2c6b2;
+
+  --color-base: #d2c6b2;
+  --color-base-hover: #313131;
+  --color-muted: #9f9787;
+  --color-muted-hover: #1f1f1f;
+
+  --color-accent: gray;
+
+  --color-shadow: 0 0 15px -5px rgba(49, 49, 49, 1);
+  --color-shadow-hover: 0 0 5px 0 rgba(210, 198, 178, 0.2);
+
+  --color-scroll-track: #313131;
+  --color-scroll-shadow: #655f56;
+  --color-scroll-thumb: #655f56;
+
+  --font-source-code-pro: "Source Code Pro", monospace;
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-fg);
+  font-family: var(--font-source-code-pro);
+}
