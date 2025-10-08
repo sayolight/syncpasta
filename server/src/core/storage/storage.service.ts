@@ -14,6 +14,11 @@ export class StorageService {
       accessKeyId: this.configService.get<string>('S3_ACCESS_KEY_ID'),
       secretAccessKey: this.configService.get<string>('S3_SECRET_ACCESS_KEY'),
     });
+    this.s3.createBucket({ Bucket: this.AWS_S3_BUCKET }, (err, data) => {
+      if (err && err.code !== 'BucketAlreadyOwnedByYou') {
+        console.error('Error creating bucket:', err);
+      }
+    });
   }
 
   async uploadFile(

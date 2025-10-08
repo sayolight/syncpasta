@@ -17,7 +17,7 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiKeyGuard } from '../api-key/api-key.guard';
 import { AnyAuthGuard } from '../auth/any-auth.guard';
 
-// @UseGuards(AuthGuard)
+@UseGuards(AuthGuard)
 // @UseGuards(ApiKeyGuard)
 @UseGuards(AnyAuthGuard)
 @Controller('pasta')

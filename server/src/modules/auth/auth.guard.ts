@@ -18,6 +18,7 @@ export class AuthGuard implements CanActivate {
   ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
+    console.log('AuthGuard#canActivate called');
     const request = context.switchToHttp().getRequest<Request>();
 
     const authHeader = request.headers.authorization;
@@ -30,6 +31,7 @@ export class AuthGuard implements CanActivate {
       .auth()
       .verifyIdToken(token)
       .catch((err) => {
+        console.error('Error verifying token:', err);
         if (err.code === 'auth/id-token-expired') {
           throw new UnauthorizedException(
             'Session expired. Please re-authenticate.',
