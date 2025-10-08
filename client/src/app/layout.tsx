@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Source_Code_Pro } from "next/font/google";
 import "./globals.css";
+import { Header } from "@/widgets/Header";
 
 const sourceCodePro = Source_Code_Pro({
   variable: "--font-source-code-pro",
@@ -19,8 +20,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${sourceCodePro.variable} text-sm antialiased`}>
-        <div className="p-3">{children}</div>
+      <body className={`${sourceCodePro.variable} text-sm antialiased flex flex-row justify-center`}>
+        <div className="w-full max-w-6xl">
+          <Header />
+          <div className="p-3">{children}</div>
+        </div>
       </body>
     </html>
   );
