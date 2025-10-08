@@ -12,11 +12,11 @@ interface InputProps {
 
 export const Input = (props: InputProps) => {
   return (
-    <div className="flex flex-col gap-0 w-full">
-      <span className="text-sm">{props.title}</span>
+    <div className="flex flex-col gap-0 w-full bg-surface-muted rounded">
+      <span className="text-xs text-muted px-3 pt-2">{props.title}</span>
       <input
         {...props}
-        className={`bg-surface-muted rounded py-2 px-3 w-full outline-none ${
+        className={`pt-1 pb-2 px-3 w-full outline-none ${
           props.className || ""
         }`}
       />
