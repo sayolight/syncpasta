@@ -8,7 +8,7 @@ export const Header = () => {
   return (
     <div className="p-3 flex items-center justify-between w-full text-sm font-semibold text-neutral-300">
       <div>
-        <Text variant="base" weight="bold" size="md" element="span" href="/">
+        <Text variant="fg" weight="bold" size="md" element="span" href="/">
           syncpasta
         </Text>
       </div>

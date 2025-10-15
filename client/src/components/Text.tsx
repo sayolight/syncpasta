@@ -2,7 +2,7 @@
 interface TextProps {
   children: React.ReactNode;
   element?: "p" | "span" | "div";
-  variant?: "base" | "muted";
+  variant?: "fg" | "muted";
   weight?:
     | "thin"
     | "extralight"
@@ -27,7 +27,7 @@ export const Text = (props: TextProps) => {
       <a
         href={props.href}
         className={`text-${props.size ?? "sm"} text-${
-          props.variant ?? "base"
+          props.variant ?? "fg"
         } font-${props.weight || "normal"} hover:text-muted transition ${props.className || ""}`}
       >
         {props.children}
