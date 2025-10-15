@@ -25,7 +25,7 @@ export const Button = (props: ButtonProps) => {
     <motion.div
       className={`bg-surface-base text-${
         props.variant === "dangerous" ? "red-400" : "base"
-      } hover:bg-surface-base-hover hover:text-base-hover cursor-pointer rounded transition py-2 px-3 text-sm w-full font-light text-${
+      } hover:bg-surface-base-hover hover:text-fg-hover cursor-pointer rounded transition py-2 px-3 text-sm w-full font-light text-${
         props.textAlign ?? "left"
       } ${props.className || ""}`}
       whileTap={{ scale: 0.99 }}
