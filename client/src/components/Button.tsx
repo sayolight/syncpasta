@@ -24,7 +24,7 @@ export const Button = (props: ButtonProps) => {
   return (
     <motion.div
       className={`bg-surface-base text-${
-        props.variant === "dangerous" ? "red-400" : "base"
+        props.variant === "dangerous" ? "red-400" : "fg"
       } hover:bg-surface-base-hover hover:text-fg-hover cursor-pointer rounded transition py-2 px-3 text-sm w-full font-light text-${
         props.textAlign ?? "left"
       } ${props.className || ""}`}

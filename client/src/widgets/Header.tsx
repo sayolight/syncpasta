@@ -15,7 +15,7 @@ export const Header = () => {
 
       <div className="flex gap-4">
         <Text href="/gallery">gallery</Text>
-        <Text href="/account">account</Text>
+        <Text href="/auth">account</Text>
       </div>
     </div>
   );

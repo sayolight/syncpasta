@@ -25,6 +25,15 @@
   --font-source-code-pro: "Source Code Pro", monospace;
 }
 
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
 body {
   background: var(--color-bg);
   color: var(--color-fg);
