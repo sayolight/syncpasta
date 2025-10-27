@@ -22,22 +22,21 @@ export const Button = (props: ButtonProps) => {
     props.element === "link" ? "a" : props.element || DEFAULT_ELEMENT;
 
   return (
-    <motion.div
-      className={`bg-surface-base text-${
-        props.variant === "dangerous" ? "red-400" : "fg"
-      } hover:bg-surface-base-hover hover:text-fg-hover cursor-pointer rounded transition py-2 px-3 text-sm w-full font-light text-${
-        props.textAlign ?? "left"
-      } ${props.className || ""}`}
-      whileTap={{ scale: 0.99 }}
-      transition={{ duration: 0.05 }}
-      onClick={props.onClick}
-    >
-      <Element href={props.href || "#"} target={props.target} type={props.type}>
+
+    <Element href={props.href || "#"} target={props.target} type={props.type}>
+      <motion.div
+        className={`bg-surface-base text-${props.variant === "dangerous" ? "red-400" : "fg"
+          } hover:bg-surface-base-hover hover:text-fg-hover cursor-pointer rounded transition py-2 px-3 text-sm w-full font-light text-${props.textAlign ?? "left"
+          } ${props.className || ""}`}
+        whileTap={{ scale: 0.99 }}
+        transition={{ duration: 0.05 }}
+        onClick={props.onClick}
+      >
         <span className={`flex items-center gap-1 cursor-pointer`}>
           {props.variant === "link" ? <ExternalLink size={18} /> : null}
           {props.children}
         </span>
-      </Element>
-    </motion.div>
+      </motion.div>
+    </Element>
   );
 };
