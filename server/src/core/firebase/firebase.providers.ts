@@ -24,8 +24,7 @@ export const firebaseProviders = [
       };
 
       return admin.initializeApp({
-        credential: admin.credential.cert(serviceAccount),
-        storageBucket: configService.get<string>('STORAGE_BUCKET'),
+        credential: admin.credential.cert(serviceAccount)
       });
     },
   },
