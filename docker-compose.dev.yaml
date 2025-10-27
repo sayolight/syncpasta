@@ -29,7 +29,7 @@ services:
 
   db:
     container_name: syncpasta-db
-    image: postgres:latest
+    image: postgres:17.6
     volumes:
       - db_data:/var/lib/postgresql/data
     environment:
