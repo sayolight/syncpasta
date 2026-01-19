@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { Repository } from 'typeorm';
+import { Like, Repository } from 'typeorm';
 import { Pasta } from './entities/pasta.entity';
 import { CreatePastaDto } from './dto/create-pasta.dto';
 import * as firebaseAdmin from 'firebase-admin';
@@ -18,7 +18,7 @@ export class PastaService {
   async findByUser(uid: string, query?: string) {
     return await this.pastaRepository.findBy({
       owner: { uid },
-      ...(query ? { description: query } : {}),
+      ...(query ? { description: Like(`%${query}%`) } : {}),
     });
   }
 
