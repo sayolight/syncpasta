@@ -4,6 +4,7 @@ import { Pasta } from './entities/pasta.entity';
 import { CreatePastaDto } from './dto/create-pasta.dto';
 import * as firebaseAdmin from 'firebase-admin';
 import { StorageService } from '../../core/storage/storage.service';
+import { ConfigService } from '@nestjs/config/dist/config.service';
 
 @Injectable()
 export class PastaService {
@@ -11,7 +12,8 @@ export class PastaService {
     @Inject('PASTA_REPOSITORY') private pastaRepository: Repository<Pasta>,
     @Inject('FIREBASE_ADMIN') private firebase: firebaseAdmin.app.App,
     private storageService: StorageService,
-  ) {}
+    private configService: ConfigService,
+  ) { }
 
   async findByUser(uid: string, query?: string) {
     return await this.pastaRepository.findBy({
@@ -30,12 +32,11 @@ export class PastaService {
       `${uid}-${new Date().getTime()}.png`,
       'image/png',
     );
-    console.log(storageFile);
 
     const pasta = this.pastaRepository.create({
       owner: { uid },
       description: createPastaDto.description,
-      fileUrl: storageFile.Location,
+      fileUrl: this.configService.get<string>('S3_PUBLIC_URL') + '/' + storageFile.Bucket + '/' + storageFile.Key,
     });
     return await this.pastaRepository.save(pasta);
   }

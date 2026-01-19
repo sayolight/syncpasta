@@ -8,6 +8,7 @@ export class StorageService {
   private s3: AWS.S3;
 
   constructor(private configService: ConfigService) {
+    console.log(this.configService.get<string>('S3_ENDPOINT'))
     this.s3 = new AWS.S3({
       endpoint: this.configService.get<string>('S3_ENDPOINT'),
       s3ForcePathStyle: true,
