@@ -88,6 +88,8 @@ services:
       - 4040:4040
     environment:
       - NGROK_AUTHTOKEN=${NGROK_TOKEN}
+    env_file:
+      - .env.dev
     depends_on:
       - nginx
 

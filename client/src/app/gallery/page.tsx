@@ -3,13 +3,22 @@ import { Button } from "@/components/Button";
 import { Image } from "@/components/Image";
 import { Input } from "@/components/Input";
 import { Modal } from "@/components/Modal";
-import { useState } from "react";
+import { getGalleryItems } from "@/lib/api/gallery";
+import { auth } from "@/lib/firebase/clientApp";
+import { useEffect, useState } from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 export default function Gallery() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [selectedImageTags, setSelectedImageTags] =
     useState<string>("test tags");
+
+  useEffect(() => {
+    getGalleryItems().then((data) => {
+      console.log(data);
+    });
+  }, []);
 
   return (
     <div>

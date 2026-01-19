@@ -22,7 +22,7 @@ export default function Auth() {
   }, [user]);
 
   const handleLogin = async () => {
-    signInUserWithEmailAndPassword(loginEmail, loginPassword);
+    await signInUserWithEmailAndPassword(loginEmail, loginPassword);
   };
 
   const handleRegister = async () => {
