@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { CreateApiKeyDto } from './dto/create-api-key.dto';
 import { Repository } from 'typeorm';
 import { ApiKey } from './entities/api-key.entity';
@@ -9,7 +9,7 @@ import * as bcrypt from 'bcrypt';
 export class ApiKeyService {
   constructor(
     @Inject('API_KEY_REPOSITORY') private apikeyRepository: Repository<ApiKey>,
-  ) {}
+  ) { }
 
   async create(createApiKeyDto: CreateApiKeyDto, uid: string) {
     const key = randomBytes(32).toString('hex');
@@ -39,5 +39,16 @@ export class ApiKeyService {
 
     const isValid = await bcrypt.compare(keyUnhashed, apiKey.key);
     return { uid: apiKey.owner.uid, isValid };
+  }
+
+  async revoke(id: number, uid: string) {
+    const apiKey = await this.apikeyRepository.findOne({
+      where: { id, owner: { uid } },
+    });
+    if (!apiKey) {
+      throw new BadRequestException('API key not found.');
+    }
+    await this.apikeyRepository.remove(apiKey);
+    return { success: true };
   }
 }

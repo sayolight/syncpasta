@@ -13,4 +13,10 @@ export class ApiKeyController {
   async create(@Body() body: CreateApiKeyDto, @Req() req: Request) {
     return await this.apiKeyService.create(body, req.user!.uid);
   }
+
+  @UseGuards(AuthGuard)
+  @Post('revoke')
+  async revoke(@Body('id') id: number, @Req() req: Request) {
+    return await this.apiKeyService.revoke(id, req.user!.uid);
+  }
 }
