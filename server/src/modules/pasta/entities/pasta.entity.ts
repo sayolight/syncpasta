@@ -9,8 +9,11 @@ export class Pasta {
   @ManyToOne(() => User, (user) => user.pastas)
   owner: User;
 
-  @Column()
-  fileUrl: string;
+  @Column({ nullable: true })
+  fileUrl?: string;
+
+  @Column({ nullable: true })
+  text?: string;
 
   @Column({ length: 256 })
   description: string;

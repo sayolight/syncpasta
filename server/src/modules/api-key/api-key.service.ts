@@ -9,7 +9,7 @@ import * as bcrypt from 'bcrypt';
 export class ApiKeyService {
   constructor(
     @Inject('API_KEY_REPOSITORY') private apikeyRepository: Repository<ApiKey>,
-  ) { }
+  ) {}
 
   async create(createApiKeyDto: CreateApiKeyDto, uid: string) {
     const key = randomBytes(32).toString('hex');

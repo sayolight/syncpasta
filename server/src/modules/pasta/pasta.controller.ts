@@ -11,15 +11,11 @@ import {
 } from '@nestjs/common';
 import { PastaService } from './pasta.service';
 import { CreatePastaDto } from './dto/create-pasta.dto';
-import { AuthGuard } from '../auth/auth.guard';
 import { Request } from 'express';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { ApiKeyGuard } from '../api-key/api-key.guard';
 import { AnyAuthGuard } from '../auth/any-auth.guard';
 import { FileValidationPipe } from '../../core/storage/file-validation.pipe';
 
-// @UseGuards(AuthGuard)
-// @UseGuards(ApiKeyGuard)
 @UseGuards(AnyAuthGuard)
 @Controller('pasta')
 export class PastaController {
@@ -35,7 +31,7 @@ export class PastaController {
   async create(
     @Req() req: Request,
     @Body() createPastaDto: CreatePastaDto,
-    @UploadedFile(new FileValidationPipe()) pasta: Express.Multer.File,
+    @UploadedFile(new FileValidationPipe()) pasta?: Express.Multer.File,
   ) {
     return await this.pastaService.create(req.user!.uid, createPastaDto, pasta);
   }
