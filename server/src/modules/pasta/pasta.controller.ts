@@ -16,6 +16,7 @@ import { Request } from 'express';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiKeyGuard } from '../api-key/api-key.guard';
 import { AnyAuthGuard } from '../auth/any-auth.guard';
+import { FileValidationPipe } from '../../core/storage/file-validation.pipe';
 
 // @UseGuards(AuthGuard)
 // @UseGuards(ApiKeyGuard)
@@ -34,7 +35,7 @@ export class PastaController {
   async create(
     @Req() req: Request,
     @Body() createPastaDto: CreatePastaDto,
-    @UploadedFile() pasta: Express.Multer.File,
+    @UploadedFile(new FileValidationPipe()) pasta: Express.Multer.File,
   ) {
     return await this.pastaService.create(req.user!.uid, createPastaDto, pasta);
   }
