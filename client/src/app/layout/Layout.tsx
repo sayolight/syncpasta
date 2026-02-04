@@ -1,11 +1,11 @@
 import Header from "./Header.tsx";
-import * as React from "react";
+import {Outlet} from "react-router";
 
-export function Layout({children}: { children: React.ReactNode }) {
+export function Layout() {
     return (
         <>
             <Header />
-            <main className="main">{children}</main>
+            <main className="main"><Outlet /></main>
         </>
     )
 }
