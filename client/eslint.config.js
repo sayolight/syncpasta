@@ -7,6 +7,8 @@ import reactRefresh from 'eslint-plugin-react-refresh'
 import importPlugin from 'eslint-plugin-import'
 import jsxA11y from 'eslint-plugin-jsx-a11y'
 import prettier from 'eslint-plugin-prettier/recommended'
+import pathAlias from 'eslint-plugin-path-alias'
+import path from "node:path";
 
 export default tseslint.config(
   { ignores: ['dist'] },
@@ -26,7 +28,8 @@ export default tseslint.config(
     },
     plugins: {
       'react-hooks': reactHooks,
-      'react-refresh': reactRefresh
+      'react-refresh': reactRefresh,
+      'path-alias': pathAlias,
     },
     settings: {
       react: {
@@ -42,7 +45,15 @@ export default tseslint.config(
       'no-console': 'warn',
       'react/button-has-type': 'error',
       'react/react-in-jsx-scope': ['off'],
-      'react-refresh/only-export-components': ['warn', { allowConstantExport: true }]
+      'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
+      'path-alias/no-relative': ['error', {
+        "exceptions": ["*.module.scss"],
+        paths: {
+          "@": path.resolve(import.meta.dirname, "src"),
+          "@ui": path.resolve(import.meta.dirname, "src/shared/ui"),
+          "@pages": path.resolve(import.meta.dirname, "src/pages"),
+        },
+      }],
     }
   }
 )

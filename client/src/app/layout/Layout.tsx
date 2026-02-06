@@ -1,4 +1,4 @@
-import Header from "./Header.tsx";
+import Header from "@/app/layout/Header.tsx";
 import { Outlet } from "react-router";
 
 export function Layout() {
