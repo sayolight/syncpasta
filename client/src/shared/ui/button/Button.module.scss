@@ -1,0 +1,47 @@
+@use '@styles/colors';
+
+.button {
+  padding-block: 0.5rem;
+  padding-inline: 0.75rem;
+  border-radius: 0.5rem;
+  border: none;
+  box-shadow: colors.$shadow;
+  transition: background-color 0.1s ease-in-out;
+  cursor: pointer;
+
+  font-weight: 500;
+
+  &.primary {
+    background: colors.$accent;
+    color: colors.$text-on-color;
+    &:hover {
+      background: colors.$accent--hover;
+    }
+    &:active {
+       background: colors.$accent--active;
+    }
+  }
+
+  &.secondary {
+    background: colors.$surface-2;
+    color: colors.$text;
+    &:hover {
+      background: colors.$surface-3;
+    }
+    &:active {
+      background: colors.$surface-1;
+    }
+  }
+
+  &.warning {
+    background: colors.$warning;
+    color: colors.$text-on-color;
+    &:hover {
+      background: colors.$warning--hover;
+    }
+    &:active {
+      background: colors.$warning--active;
+    }
+  }
+}
+

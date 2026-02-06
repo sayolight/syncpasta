@@ -2,13 +2,13 @@
 
 * {
   font-family: colors.$font;
+  font-size: 14px;
   color: colors.$text;
 }
 
 :root {
     background-color: colors.$background;
 
-    font-size: 14px;
     font-optical-sizing: auto;
     font-weight: 500;
     font-style: normal;

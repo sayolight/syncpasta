@@ -6,7 +6,7 @@ export default function MainPage() {
       <Button>secondary button</Button>
       <Button variant={"primary"}>primary button</Button>
       <Button variant={"warning"}>warning button</Button>
-      <Input title={"gigga"}></Input>
+      <Input placeholder={"test"} title={"tvoe imya"}></Input>
     </>
   );
 }
