@@ -1,4 +1,4 @@
-import { Injectable, ParseFilePipeBuilder, UploadedFile } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import * as AWS from 'aws-sdk';
 import { ConfigService } from '@nestjs/config';
 
@@ -8,14 +8,14 @@ export class StorageService {
   private s3: AWS.S3;
 
   constructor(private configService: ConfigService) {
-    console.log(this.configService.get<string>('S3_ENDPOINT'))
+    console.log(this.configService.get<string>('S3_ENDPOINT'));
     this.s3 = new AWS.S3({
       endpoint: this.configService.get<string>('S3_ENDPOINT'),
       s3ForcePathStyle: true,
       accessKeyId: this.configService.get<string>('S3_ACCESS_KEY_ID'),
       secretAccessKey: this.configService.get<string>('S3_SECRET_ACCESS_KEY'),
     });
-    this.s3.createBucket({ Bucket: this.AWS_S3_BUCKET }, (err, data) => {
+    this.s3.createBucket({ Bucket: this.AWS_S3_BUCKET }, (err) => {
       if (err && err.code !== 'BucketAlreadyOwnedByYou') {
         console.error('Error creating bucket:', err);
       }

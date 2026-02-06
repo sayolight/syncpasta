@@ -19,12 +19,14 @@ export const firebaseProviders = [
         authProviderX509CertUrl: configService.get<string>(
           'FIREBASE_AUTH_PROVIDER_X509_CERT_URL',
         ),
-        clientC509CertUrl: configService.get<string>('FIREBASE_CLIENT_X509_CERT_URL'),
+        clientC509CertUrl: configService.get<string>(
+          'FIREBASE_CLIENT_X509_CERT_URL',
+        ),
         universeDomain: configService.get<string>('FIREBASE_UNIVERSE_DOMAIN'),
       };
 
       return admin.initializeApp({
-        credential: admin.credential.cert(serviceAccount)
+        credential: admin.credential.cert(serviceAccount),
       });
     },
   },
