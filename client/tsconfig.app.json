@@ -30,7 +30,7 @@
       "@/*": ["./*"],
       "@ui/*": ["./shared/ui/*"],
       "@pages/*": ["./pages/*"],
-      "@styles/*": ["./app/styles"],
+      "@styles/*": ["./app/styles/*"],
     }
   },
   "include": ["src"]

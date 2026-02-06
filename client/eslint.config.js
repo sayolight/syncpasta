@@ -52,6 +52,7 @@ export default tseslint.config(
           "@": path.resolve(import.meta.dirname, "src"),
           "@ui": path.resolve(import.meta.dirname, "src/shared/ui"),
           "@pages": path.resolve(import.meta.dirname, "src/pages"),
+          "@styles": path.resolve(import.meta.dirname, "src/app/styles"),
         },
       }],
     }
