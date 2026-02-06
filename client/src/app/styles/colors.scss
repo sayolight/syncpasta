@@ -1,3 +1,39 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+
 $background: #1F1F1F;
+$font: "Open Sans", sans-serif;
+
 $text: #D2C6B2;
 $text--muted: #9B9B9B;
+$text--disabled: #6F6F6F;
+
+$surface-0: $background;
+$surface-1: #252525;
+$surface-2: #2C2C2C;
+$surface-3: #343434;
+
+$border: #2E2E2E;
+$divider: #2A2A2A;
+
+$overlay: rgba(0, 0, 0, 0.5);
+$shadow: 0 0 2px rgba(0, 0, 0, 0.15);
+
+$accent: #7FAF8F;
+$accent--hover: #8BB99A;
+$accent--active: #6FA380;
+
+$success: #5FB3A2;
+$success--hover: #4FA293;
+$success--active: #468E81;
+
+$warning: #C9A86A;
+$warning--hover: #D4B57A;
+$warning--active: #B9975E;
+
+$error: #C97A7A;
+$error--hover: #D48A8A;
+$error--active: #B86B6B;
+
+$text-on-color: $background;
+
+$focus-ring: rgba(143, 166, 160, 0.5);
