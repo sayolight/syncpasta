@@ -1,0 +1,35 @@
+@use '@styles/colors';
+
+.block {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  &--is_card {
+    background: colors.$surface-1;
+    padding-block: 0.75rem;
+    padding-inline: 0.75rem;
+    border-radius: 0.5rem;
+    box-shadow: colors.$shadow;
+  }
+
+  &__title {
+    font-size: 13px;
+    font-weight: 700;
+    color: colors.$text--muted;
+  }
+
+  &__children {
+    gap: 0.5rem;
+    display: flex;
+
+    &--row {
+      flex-direction: row;
+    }
+
+    &--column {
+      flex-direction: column;
+    }
+  }
+
+}
