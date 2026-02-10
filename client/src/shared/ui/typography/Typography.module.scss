@@ -20,6 +20,9 @@
   &--variant-disabled {
     color: colors.$text--disabled;
   }
+  &--variant-accent {
+    color: colors.$accent;
+  }
 
   &--align-left {
     text-align: left;

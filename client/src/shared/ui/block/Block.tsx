@@ -13,11 +13,16 @@ export function Block({
   isCard = true,
   title,
   children,
+  className,
   ...props
 }: CardProps) {
   return (
     <div
-      className={clsx(styles.block, isCard && styles["block--is_card"])}
+      className={clsx(
+        styles.block,
+        isCard && styles["block--is_card"],
+        className,
+      )}
       {...props}
     >
       {title && <span className={styles.block__title}>{title}</span>}

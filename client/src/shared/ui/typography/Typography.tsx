@@ -6,7 +6,7 @@ interface TypographyProps extends React.HTMLProps<HTMLElement> {
   type?: "h1" | "h2" | "p" | "span";
   align?: "left" | "center" | "right";
   weight?: "regular" | "medium" | "bold";
-  variant?: "normal" | "muted" | "disabled";
+  variant?: "normal" | "accent" | "muted" | "disabled";
 }
 
 export function Typography({
@@ -15,6 +15,7 @@ export function Typography({
   weight = "regular",
   variant = "normal",
   children,
+  className,
   ...props
 }: TypographyProps) {
   const Tag = type as React.ElementType;
@@ -28,6 +29,7 @@ export function Typography({
         styles[`typography--align-${align}`],
         styles[`typography--weight-${weight}`],
         styles[`typography--variant-${variant}`],
+        className,
       )}
     >
       {children}
