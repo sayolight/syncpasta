@@ -1,4 +1,4 @@
-import { Button, Block, Input } from "@/shared/ui";
+import { Button, Block, Input, Typography } from "@/shared/ui";
 
 export default function MainPage() {
   return (
@@ -8,6 +8,21 @@ export default function MainPage() {
         <Button>secondary button</Button>
         <Button variant={"primary"}>primary button</Button>
         <Button variant={"warning"}>warning button</Button>
+        <Typography variant={"normal"} align={"left"} weight={"regular"}>
+          hello
+        </Typography>
+        <Typography variant={"normal"} align={"left"} weight={"medium"}>
+          hello
+        </Typography>
+        <Typography variant={"normal"} align={"left"} weight={"bold"}>
+          hello
+        </Typography>
+        <Typography variant={"muted"} align={"center"} weight={"medium"}>
+          hello
+        </Typography>
+        <Typography variant={"disabled"} align={"right"} weight={"bold"}>
+          hello
+        </Typography>
       </Block>
 
       <Block direction="row" title={"test block"}>

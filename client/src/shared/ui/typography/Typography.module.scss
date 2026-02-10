@@ -1,0 +1,33 @@
+@use '@styles/colors';
+
+.typography {
+  &--weight-regular {
+    font-weight: 400;
+  }
+  &--weight-medium {
+    font-weight: 500;
+  }
+  &--weight-bold {
+    font-weight: 700;
+  }
+
+  &--variant-normal {
+    color: colors.$text;
+  }
+  &--variant-muted {
+    color: colors.$text--muted;
+  }
+  &--variant-disabled {
+    color: colors.$text--disabled;
+  }
+
+  &--align-left {
+    text-align: left;
+  }
+  &--align-center {
+    text-align: center;
+  }
+  &--align-right {
+    text-align: right;
+  }
+}
