@@ -1,4 +1,4 @@
-import { LoginForm, RegisterForm } from "@/features/auth";
+import { LoginForm, SignUpForm } from "@/features/auth";
 import { Block } from "@ui/block";
 import { Typography } from "@/shared/ui";
 
@@ -9,7 +9,7 @@ export default function AuthPage() {
       <Typography variant={"muted"} align={"center"} weight={"bold"}>
         = or =
       </Typography>
-      <RegisterForm />
+      <SignUpForm />
     </Block>
   );
 }

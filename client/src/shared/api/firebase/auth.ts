@@ -2,6 +2,7 @@ import {
   signInWithEmailAndPassword,
   signOut as signOutFirebase,
   onAuthStateChanged,
+  createUserWithEmailAndPassword,
   type User,
 } from "@firebase/auth";
 import { auth } from "@/shared/config/firebase.ts";
@@ -12,6 +13,10 @@ export const signIn = (email: string, password: string) => {
 
 export const signOut = () => {
   return signOutFirebase(auth);
+};
+
+export const signUp = (email: string, password: string) => {
+  return createUserWithEmailAndPassword(auth, email, password);
 };
 
 export const onChange = (cb: (user: User | null) => void) => {

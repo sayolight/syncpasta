@@ -12,6 +12,11 @@
   box-shadow: colors.$shadow;
   transition: background-color 0.1s ease-in-out, outline-color 0.1s ease-in-out;
 
+  &--disabled {
+    cursor: not-allowed;
+    filter: brightness(60%);
+  }
+
   &:hover {
     background: colors.$surface-3;
     outline: 1px solid colors.$accent--hover;
@@ -27,6 +32,9 @@
   }
 
   .input {
+    &[disabled] {
+      cursor: not-allowed;
+    }
     border: none;
     outline: none;
     cursor: text;

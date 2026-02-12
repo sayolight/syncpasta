@@ -1,16 +1,19 @@
 import { useState } from "react";
-// import { useNavigate } from "react-router";
 import { FirebaseError } from "@firebase/app";
+import * as firebase from "@/shared/api/firebase";
+import { useNavigate } from "react-router";
 
-// TODO: register user
-export function useRegister() {
+export function useSignUp() {
   const [isLoading, setLoading] = useState(false);
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const [error, setError] = useState<string | null>();
 
-  const register = async () => {
+  const signUp = async (data: { email: string; password: string }) => {
     try {
       setLoading(true);
+      await firebase.signUp(data.email, data.password);
+      setError(null);
+      navigate("/");
     } catch (e) {
       if (e instanceof FirebaseError) {
         setError(e.code);
@@ -20,5 +23,5 @@ export function useRegister() {
     }
   };
 
-  return { register, isLoading, error };
+  return { signUp, isLoading, error };
 }
