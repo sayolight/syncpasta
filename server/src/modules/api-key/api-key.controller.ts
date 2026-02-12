@@ -1,7 +1,7 @@
-import { Body, Controller, Post, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
 import { ApiKeyService } from './api-key.service';
 import { CreateApiKeyDto } from './dto/create-api-key.dto';
-import { AuthGuard } from '../../modules/auth/auth.guard';
+import { AuthGuard } from '../auth/auth.guard';
 import { Request } from 'express';
 
 @Controller('api-key')
@@ -18,5 +18,11 @@ export class ApiKeyController {
   @Post('revoke')
   async revoke(@Body('id') id: number, @Req() req: Request) {
     return await this.apiKeyService.revoke(id, req.user!.uid);
+  }
+
+  @UseGuards(AuthGuard)
+  @Get()
+  async findAll(@Req() req: Request) {
+    return await this.apiKeyService.findAll(req.user!.uid);
   }
 }

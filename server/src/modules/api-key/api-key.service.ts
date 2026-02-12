@@ -51,4 +51,13 @@ export class ApiKeyService {
     await this.apikeyRepository.remove(apiKey);
     return { success: true };
   }
+
+  async findAll(uid: string) {
+    return await this.apikeyRepository.find({
+      where: {
+        owner: { uid },
+      },
+      select: ['id', 'name', 'description'],
+    });
+  }
 }
