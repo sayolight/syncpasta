@@ -1,17 +1,17 @@
 import { useState } from "react";
-import { signIn } from "@/shared/api/firebase";
+import * as firebase from "@/shared/api/firebase";
 import { FirebaseError } from "@firebase/app";
 import { useNavigate } from "react-router";
 
-export function useLogin() {
+export function useSignIn() {
   const [isLoading, setLoading] = useState(false);
   const navigate = useNavigate();
   const [error, setError] = useState<string | null>();
 
-  const login = async (data: { email: string; password: string }) => {
+  const signIn = async (data: { email: string; password: string }) => {
     try {
       setLoading(true);
-      await signIn(data.email, data.password);
+      await firebase.signIn(data.email, data.password);
       setError(null);
       navigate("/");
     } catch (e) {
@@ -23,5 +23,5 @@ export function useLogin() {
     }
   };
 
-  return { login, isLoading, error };
+  return { signIn, isLoading, error };
 }
