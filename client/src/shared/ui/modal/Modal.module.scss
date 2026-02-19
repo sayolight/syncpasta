@@ -1,6 +1,7 @@
 @use "@styles/colors.scss";
 
 .modal {
+  z-index: 1;
   &, &__background {
     position: fixed;
     top: 0;
