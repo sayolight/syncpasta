@@ -1,8 +1,20 @@
 import { Button, Block, Input, Typography } from "@/shared/ui";
+import { Modal } from "@ui/modal";
+import * as React from "react";
 
 export default function MainPage() {
+  const [modal, setModal] = React.useState(true);
+
   return (
     <>
+      <Modal
+        active={modal}
+        onClose={() => setModal(false)}
+        title={"test modal"}
+      >
+        <Input placeholder={"test"} title={"tvoe imya"}></Input>
+        <Button variant={"primary"}>submit</Button>
+      </Modal>
       <Block direction="column" title={"test block"}>
         <Input placeholder={"test"} title={"tvoe imya"}></Input>
         <Button>secondary button</Button>
