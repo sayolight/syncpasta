@@ -1,21 +1,21 @@
-import { useLocation } from "react-router";
+import { Link, useLocation } from "react-router";
 
 export default function Header() {
   const location = useLocation();
 
   return (
     <header className="header">
-      <a href={"/"}>
+      <Link to={{ pathname: "/" }}>
         <span className="header__logo">syncpasta</span>
         <span className="header__pathname">
           {" "}
-          {"//"} {location.pathname}
+          {"//"} {location.pathname.split("/")[1] || "main"}
         </span>
-      </a>
+      </Link>
       <div className="header__nav">
-        <a href={"/applications"}>applications</a>
-        <a href={"/gallery"}>gallery</a>
-        <a href={"/account"}>account</a>
+        <Link to={{ pathname: "/applications" }}>applications</Link>
+        <Link to={{ pathname: "/gallery" }}>gallery</Link>
+        <Link to={{ pathname: "/auth" }}>account</Link>
       </div>
     </header>
   );
