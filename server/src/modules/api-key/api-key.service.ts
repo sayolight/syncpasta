@@ -12,9 +12,7 @@ export class ApiKeyService {
   ) {}
 
   async create(createApiKeyDto: CreateApiKeyDto, uid: string) {
-    const key = randomBytes(32).toString('hex');
-    const prefix = randomBytes(16).toString('hex');
-    const keyHashed = await bcrypt.hash(key, 10);
+    const { keyHashed, prefix } = await this.generateKey();
     const apiKey = this.apikeyRepository.create({
       key: keyHashed,
       prefix,
@@ -24,8 +22,18 @@ export class ApiKeyService {
 
     await this.apikeyRepository.save(apiKey);
     return {
-      key: `${prefix}.${key}`,
+      id: apiKey.id,
+      ...createApiKeyDto,
+      key: `${prefix}.${keyHashed}`,
     };
+  }
+
+  async generateKey() {
+    const key = randomBytes(32).toString('hex');
+    const prefix = randomBytes(16).toString('hex');
+    const keyHashed = await bcrypt.hash(key, 10);
+
+    return { keyHashed, prefix };
   }
 
   async validateApiKey(key: string) {
@@ -45,11 +53,34 @@ export class ApiKeyService {
     const apiKey = await this.apikeyRepository.findOne({
       where: { id, owner: { uid } },
     });
-    if (!apiKey) {
-      throw new BadRequestException('API key not found.');
-    }
+    if (!apiKey) throw new BadRequestException('API key not found.');
+
     await this.apikeyRepository.remove(apiKey);
     return { success: true };
+  }
+
+  async reset(id: number, uid: string) {
+    const apiKey = await this.apikeyRepository.findOne({
+      where: { id, owner: { uid } },
+    });
+    if (!apiKey) throw new BadRequestException('API key not found.');
+
+    const { keyHashed, prefix } = await this.generateKey();
+    await this.apikeyRepository.update(
+      {
+        id,
+        owner: { uid },
+      },
+      {
+        key: keyHashed,
+        prefix,
+      },
+    );
+
+    return {
+      ...apiKey,
+      key: `${prefix}.${keyHashed}`,
+    };
   }
 
   async findAll(uid: string) {

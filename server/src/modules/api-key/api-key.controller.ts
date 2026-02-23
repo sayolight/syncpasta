@@ -21,6 +21,12 @@ export class ApiKeyController {
   }
 
   @UseGuards(AuthGuard)
+  @Post('reset')
+  async reset(@Body('id') id: number, @Req() req: Request) {
+    return await this.apiKeyService.reset(id, req.user!.uid);
+  }
+
+  @UseGuards(AuthGuard)
   @Get()
   async findAll(@Req() req: Request) {
     return await this.apiKeyService.findAll(req.user!.uid);

@@ -26,6 +26,8 @@ services:
     depends_on:
       - server
       - firebase
+    environment:
+      VITE_API_URL: http://localhost/api
 
   db:
     container_name: syncpasta-db

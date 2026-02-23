@@ -1,0 +1,25 @@
+@use '@styles/colors';
+
+$timeline: colors.$text--muted;
+
+.timeline {
+  color: $timeline;
+
+  &__item {
+    display: flex;
+    flex-direction: column;
+
+    padding-bottom: 0.5rem;
+
+    &:last-child {
+      padding-bottom: 0;
+    }
+
+    &__date::before {
+      content: "│";
+    }
+    &__content::before {
+      content: "└─ ";
+    }
+  }
+}
