@@ -12,7 +12,7 @@ export class ApiKeyService {
   ) {}
 
   async create(createApiKeyDto: CreateApiKeyDto, uid: string) {
-    const { keyHashed, prefix } = await this.generateKey();
+    const { secret, keyHashed, prefix } = await this.generateKey();
     const apiKey = this.apikeyRepository.create({
       key: keyHashed,
       prefix,
@@ -24,16 +24,16 @@ export class ApiKeyService {
     return {
       id: apiKey.id,
       ...createApiKeyDto,
-      key: `${prefix}.${keyHashed}`,
+      key: `${prefix}.${secret}`,
     };
   }
 
   async generateKey() {
-    const key = randomBytes(32).toString('hex');
+    const secret = randomBytes(32).toString('hex');
     const prefix = randomBytes(16).toString('hex');
-    const keyHashed = await bcrypt.hash(key, 10);
+    const keyHashed = await bcrypt.hash(secret, 10);
 
-    return { keyHashed, prefix };
+    return { secret, keyHashed, prefix };
   }
 
   async validateApiKey(key: string) {
@@ -65,7 +65,7 @@ export class ApiKeyService {
     });
     if (!apiKey) throw new BadRequestException('API key not found.');
 
-    const { keyHashed, prefix } = await this.generateKey();
+    const { secret, keyHashed, prefix } = await this.generateKey();
     await this.apikeyRepository.update(
       {
         id,
@@ -79,7 +79,7 @@ export class ApiKeyService {
 
     return {
       ...apiKey,
-      key: `${prefix}.${keyHashed}`,
+      key: `${prefix}.${secret}`,
     };
   }
 
