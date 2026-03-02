@@ -15,6 +15,6 @@ export class Pasta {
   @Column({ nullable: true })
   text?: string;
 
-  @Column({ length: 256 })
+  @Column({ length: 2048 })
   description: string;
 }

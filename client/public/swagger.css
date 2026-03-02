@@ -1,0 +1,38 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
+
+.topbar {
+    /*display: none;*/
+}
+
+* {
+    font-family: "Roboto Mono", monospace !important;
+    color: #D2C6B2 !important;
+}
+
+.opblock {
+    background: #252525 !important;
+    border: 1px solid #2C2C2C !important;
+}
+
+.opblock-section-header {
+    background: #2C2C2C !important;
+    border: none !important;
+}
+
+.swagger-ui select, .btn {
+    padding-block: 0.5rem !important;
+    padding-inline: 0.75rem !important;
+    border-radius: 0.5rem !important;
+    border: none !important;
+    background-color: #252525 !important;
+    cursor: pointer;
+}
+
+.opblock-summary-method {
+    background: #7FAF8F !important;
+    color: #1F1F1F !important;
+}
+
+.swagger-ui {
+    background: #1F1F1F !important;
+}

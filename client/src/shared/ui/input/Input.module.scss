@@ -42,5 +42,28 @@
 
     background: transparent;
     color: colors.$text;
+
+    &[type=file] {
+      cursor: pointer;
+    }
+
+    &::file-selector-button {
+      font-family: colors.$font;
+      font-weight: 500;
+      padding-block: 0.5rem;
+      padding-inline: 0.75rem;
+      border-radius: 0.5rem;
+
+      border: none;
+      background: colors.$accent;
+      color: colors.$text-on-color;
+
+      &:hover {
+        background: colors.$accent--hover;
+      }
+      &:active {
+        background: colors.$accent--active;
+      }
+    }
   }
 }
