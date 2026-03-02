@@ -1,47 +1,43 @@
-import { Button, Block, Input, Typography } from "@/shared/ui";
-import { Modal } from "@ui/modal";
-import * as React from "react";
+import { Button, Block, Typography, Input } from "@/shared/ui";
+import { useNavigate } from "react-router";
 
 export default function MainPage() {
-  const [modal, setModal] = React.useState(true);
+  const navigate = useNavigate();
 
   return (
     <>
-      <Modal
-        active={modal}
-        onClose={() => setModal(false)}
-        title={"test modal"}
-      >
-        <Input placeholder={"test"} title={"tvoe imya"}></Input>
-        <Button variant={"primary"}>submit</Button>
-      </Modal>
-      <Block direction="column" title={"test block"}>
-        <Input placeholder={"test"} title={"tvoe imya"}></Input>
-        <Button>secondary button</Button>
-        <Button variant={"primary"}>primary button</Button>
-        <Button variant={"warning"}>warning button</Button>
-        <Typography variant={"normal"} align={"left"} weight={"regular"}>
-          hello
+      <Block>
+        <Typography weight={"bold"}>welcome to syncpasta</Typography>
+        <Typography variant={"muted"}>
+          a service for synchronizing text and media files between any
+          applications.
         </Typography>
-        <Typography variant={"normal"} align={"left"} weight={"medium"}>
-          hello
-        </Typography>
-        <Typography variant={"normal"} align={"left"} weight={"bold"}>
-          hello
-        </Typography>
-        <Typography variant={"muted"} align={"center"} weight={"medium"}>
-          hello
-        </Typography>
-        <Typography variant={"disabled"} align={"right"} weight={"bold"}>
-          hello
-        </Typography>
+        <Button variant={"primary"} onClick={() => navigate("/auth")}>
+          get started
+        </Button>
       </Block>
 
-      <Block direction="row" title={"test block"}>
-        <Input placeholder={"test"} title={"tvoe imya"}></Input>
-        <Button>secondary button</Button>
-        <Button variant={"primary"}>primary button</Button>
-        <Button variant={"warning"}>warning button</Button>
+      <Block>
+        <Typography weight={"bold"}>organize</Typography>
+        <Typography variant={"muted"}>
+          search for your media simply by using keywords.
+        </Typography>
+        <Input title={"keywords"} value={"funny cat gif"}></Input>
+      </Block>
+
+      <Block>
+        <Typography weight={"bold"}>integration</Typography>
+        <Typography variant={"muted"}>
+          create your own integration with syncpasta or use any ready-made one.
+        </Typography>
+        <Block direction={"row"} isCard={false}>
+          <a href={"/applications"}>
+            <Button variant={"secondary"}>applications</Button>
+          </a>
+          <a href={"/api/docs"}>
+            <Button variant={"secondary"}>documentation</Button>
+          </a>
+        </Block>
       </Block>
     </>
   );
