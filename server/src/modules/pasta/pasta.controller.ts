@@ -31,8 +31,8 @@ export class PastaController {
   async create(
     @Req() req: Request,
     @Body() createPastaDto: CreatePastaDto,
-    @UploadedFile(new FileValidationPipe()) pasta?: Express.Multer.File,
+    @UploadedFile(new FileValidationPipe()) file?: Express.Multer.File,
   ) {
-    return await this.pastaService.create(req.user!.uid, createPastaDto, pasta);
+    return await this.pastaService.create(req.user!.uid, createPastaDto, file);
   }
 }

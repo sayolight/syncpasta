@@ -25,31 +25,39 @@ export class PastaService {
   async create(
     uid: string,
     createPastaDto: CreatePastaDto,
-    pastaFile?: Express.Multer.File,
+    file?: Express.Multer.File,
   ) {
-    if (!createPastaDto.text && !pastaFile) {
+    if (!createPastaDto.text && !file) {
       throw new BadRequestException('Pasta must have text or a file');
     }
 
     const storageFile =
-      pastaFile &&
+      file &&
       (await this.storageService.uploadFile(
-        pastaFile,
+        file,
         `${uid}-${new Date().getTime()}`,
-        pastaFile.mimetype,
+        file.mimetype,
       ));
 
     const pasta = this.pastaRepository.create({
       owner: { uid },
       keywords: createPastaDto.keywords,
-      fileUrl: storageFile
-        ? this.configService.get<string>('S3_PUBLIC_URL') +
-          '/' +
-          storageFile.Bucket +
-          '/' +
-          storageFile.Key
-        : undefined,
       text: createPastaDto.text,
+      ...(file
+        ? {
+            file: {
+              url: storageFile
+                ? this.configService.get<string>('S3_PUBLIC_URL') +
+                  '/' +
+                  storageFile.Bucket +
+                  '/' +
+                  storageFile.Key
+                : undefined,
+              mimetype: file?.mimetype,
+              size: file?.size,
+            },
+          }
+        : {}),
     });
     return await this.pastaRepository.save(pasta);
   }
