@@ -16,7 +16,7 @@ export function RemoveApiKeyButton({ application }: RemoveApiKeyButtonProps) {
       variant={"warning"}
       disabled={isLoading}
       onClick={() =>
-        removeApiKey({ id: application.id }).then(() => remove(application))
+        removeApiKey({ id: application.id }).then(() => remove(application.id))
       }
     >
       remove
