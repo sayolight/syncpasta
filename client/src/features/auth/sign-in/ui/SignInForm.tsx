@@ -1,7 +1,7 @@
 import { Block } from "@ui/block";
 import { Input } from "@ui/input";
 import { Button } from "@ui/button";
-import { useSignIn } from "@/features/auth/model/useSignIn.ts";
+import { useSignIn } from "@/features/auth/sign-in/model/useSignIn.ts";
 import { useState } from "react";
 import * as React from "react";
 import { Alert } from "@/shared/ui";

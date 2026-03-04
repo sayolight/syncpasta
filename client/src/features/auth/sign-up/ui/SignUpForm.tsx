@@ -2,7 +2,7 @@ import { Block } from "@ui/block";
 import { Input } from "@ui/input";
 import { Button } from "@ui/button";
 import { useState } from "react";
-import { useSignUp } from "@/features/auth/model/useSignUp.ts";
+import { useSignUp } from "@/features/auth/sign-up/model/useSignUp.ts";
 import * as React from "react";
 import { Alert } from "@ui/alert";
 
