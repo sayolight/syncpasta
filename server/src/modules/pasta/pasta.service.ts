@@ -35,8 +35,8 @@ export class PastaService {
       pastaFile &&
       (await this.storageService.uploadFile(
         pastaFile,
-        `${uid}-${new Date().getTime()}.png`,
-        'image/png',
+        `${uid}-${new Date().getTime()}`,
+        pastaFile.mimetype,
       ));
 
     const pasta = this.pastaRepository.create({
