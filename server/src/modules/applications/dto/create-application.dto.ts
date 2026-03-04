@@ -1,6 +1,6 @@
 import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
-export class CreateApiKeyDto {
+export class CreateApplicationDto {
   @IsNotEmpty()
   @IsString()
   name: string;

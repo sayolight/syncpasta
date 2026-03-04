@@ -12,9 +12,12 @@ export function useResetApiKey() {
   const resetApiKey = async (data: { id: string }) => {
     try {
       setLoading(true);
-      const applicationUpdated = await http.post<Application>("api-key/reset", {
-        id: data.id,
-      });
+      const applicationUpdated = await http.post<Application>(
+        "/applications/reset",
+        {
+          id: data.id,
+        },
+      );
       update(applicationUpdated.data);
     } catch (e) {
       if (e instanceof AxiosError) {

@@ -16,5 +16,5 @@ export class Pasta {
   text?: string;
 
   @Column({ length: 2048 })
-  description: string;
+  keywords: string;
 }

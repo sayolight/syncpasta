@@ -27,7 +27,7 @@ export class PastaController {
   }
 
   @Post()
-  @UseInterceptors(FileInterceptor('pasta'))
+  @UseInterceptors(FileInterceptor('file'))
   async create(
     @Req() req: Request,
     @Body() createPastaDto: CreatePastaDto,

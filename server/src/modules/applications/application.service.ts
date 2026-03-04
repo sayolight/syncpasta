@@ -1,17 +1,18 @@
 import { BadRequestException, Inject, Injectable } from '@nestjs/common';
-import { CreateApiKeyDto } from './dto/create-api-key.dto';
+import { CreateApplicationDto } from './dto/create-application.dto';
 import { Repository } from 'typeorm';
-import { ApiKey } from './entities/api-key.entity';
+import { Application } from './entities/application.entity';
 import { randomBytes } from 'crypto';
 import * as bcrypt from 'bcrypt';
 
 @Injectable()
-export class ApiKeyService {
+export class ApplicationService {
   constructor(
-    @Inject('API_KEY_REPOSITORY') private apikeyRepository: Repository<ApiKey>,
+    @Inject('API_KEY_REPOSITORY')
+    private apikeyRepository: Repository<Application>,
   ) {}
 
-  async create(createApiKeyDto: CreateApiKeyDto, uid: string) {
+  async create(createApiKeyDto: CreateApplicationDto, uid: string) {
     const { secret, keyHashed, prefix } = await this.generateKey();
     const apiKey = this.apikeyRepository.create({
       key: keyHashed,

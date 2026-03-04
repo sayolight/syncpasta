@@ -16,7 +16,7 @@ export function useCreateApplication() {
     try {
       setLoading(true);
       setError(null);
-      const application = await http.post<Application>("/api-key/", data);
+      const application = await http.post<Application>("/applications/", data);
       add(application.data);
     } catch (e) {
       if (e instanceof AxiosError) {

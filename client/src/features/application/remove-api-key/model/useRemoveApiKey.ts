@@ -13,7 +13,7 @@ export function useRemoveApiKey() {
     try {
       setLoading(true);
       setError(null);
-      await http.post<Application>("/api-key/revoke", data);
+      await http.post<Application>("/applications/revoke", data);
       remove(data.id);
     } catch (e) {
       if (e instanceof AxiosError) {

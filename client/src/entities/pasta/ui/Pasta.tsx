@@ -14,12 +14,12 @@ export function PastaCard({ pasta }: PastaProps) {
         <img
           className={styles.pasta__media}
           src={pasta.fileUrl}
-          alt={pasta.description}
+          alt={pasta.keywords}
         />
       )}
       {pasta.text && <Typography>{pasta.text}</Typography>}
       <Typography variant={"muted"} className={styles.pasta__description}>
-        {pasta.description}
+        {pasta.keywords}
       </Typography>
     </div>
   );

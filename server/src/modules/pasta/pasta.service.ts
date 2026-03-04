@@ -18,7 +18,7 @@ export class PastaService {
   async findByUser(uid: string, query?: string) {
     return await this.pastaRepository.findBy({
       owner: { uid },
-      ...(query ? { description: Like(`%${query}%`) } : {}),
+      ...(query ? { keywords: Like(`%${query}%`) } : {}),
     });
   }
 
@@ -41,7 +41,7 @@ export class PastaService {
 
     const pasta = this.pastaRepository.create({
       owner: { uid },
-      description: createPastaDto.description,
+      keywords: createPastaDto.keywords,
       fileUrl: storageFile
         ? this.configService.get<string>('S3_PUBLIC_URL') +
           '/' +

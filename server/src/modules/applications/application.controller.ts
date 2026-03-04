@@ -1,16 +1,16 @@
 import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
-import { ApiKeyService } from './api-key.service';
-import { CreateApiKeyDto } from './dto/create-api-key.dto';
+import { ApplicationService } from './application.service';
+import { CreateApplicationDto } from './dto/create-application.dto';
 import { AuthGuard } from '../auth/auth.guard';
 import { Request } from 'express';
 
-@Controller('api-key')
-export class ApiKeyController {
-  constructor(private readonly apiKeyService: ApiKeyService) {}
+@Controller('applications')
+export class ApplicationController {
+  constructor(private readonly apiKeyService: ApplicationService) {}
 
   @UseGuards(AuthGuard)
   @Post()
-  async create(@Body() body: CreateApiKeyDto, @Req() req: Request) {
+  async create(@Body() body: CreateApplicationDto, @Req() req: Request) {
     return await this.apiKeyService.create(body, req.user!.uid);
   }
 

@@ -37,7 +37,7 @@ export function CreatePastaForm({
         <Input
           title={"keywords"}
           placeholder={"hello world"}
-          name={"description"}
+          name={"keywords"}
           disabled={isLoading}
         ></Input>
         <Input
@@ -49,7 +49,7 @@ export function CreatePastaForm({
         <Input
           title={"file"}
           type={"file"}
-          name={"pasta"}
+          name={"file"}
           disabled={isLoading}
         ></Input>
         <Button type={"submit"} variant={"primary"} disabled={isLoading}>

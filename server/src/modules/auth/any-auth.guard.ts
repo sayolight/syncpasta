@@ -1,6 +1,18 @@
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
-import { ApiKeyGuard } from '../api-key/api-key.guard';
+import { ApiKeyGuard } from '../applications/api-key.guard';
 import { AuthGuard } from './auth.guard';
+import { Observable } from 'rxjs';
+
+async function tryGuard(
+  guard: CanActivate,
+  context: ExecutionContext,
+): Promise<boolean | Observable<boolean>> {
+  try {
+    return await guard.canActivate(context);
+  } catch {
+    return false;
+  }
+}
 
 @Injectable()
 export class AnyAuthGuard implements CanActivate {
@@ -10,16 +22,7 @@ export class AnyAuthGuard implements CanActivate {
   ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
-    try {
-      const apiKeyPassed = await this.apiKeyGuard.canActivate(context);
-      if (apiKeyPassed) return true;
-    } catch (e) {}
-
-    try {
-      const authPassed = await this.authGuard.canActivate(context);
-      if (authPassed) return true;
-    } catch (e) {}
-
-    return false;
+    if (await tryGuard(this.apiKeyGuard, context)) return true;
+    return !!(await tryGuard(this.authGuard, context));
   }
 }

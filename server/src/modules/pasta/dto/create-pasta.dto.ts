@@ -2,7 +2,7 @@ import { IsNotEmpty, IsOptional } from 'class-validator';
 
 export class CreatePastaDto {
   @IsNotEmpty()
-  description: string;
+  keywords: string;
 
   @IsOptional()
   text?: string;
