@@ -36,7 +36,7 @@ export default function GalleryPage() {
           + create a new pasta
         </Button>
       </Block>
-      <PastaBoard pasta={pasta} />
+      <PastaBoard pasta={pasta} onUpdate={fetchPasta} />
       <CreatePastaForm
         isOpen={isOpen}
         setIsOpen={setIsOpen}

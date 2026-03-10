@@ -3,20 +3,14 @@ import type { Pasta } from "@/entities/pasta/model/types.ts";
 import { Typography } from "@/shared/ui";
 import * as React from "react";
 
-interface PastaProps extends React.HTMLAttributes<HTMLDivElement> {
+interface PastaProps extends React.HTMLAttributes<HTMLButtonElement> {
   pasta: Pasta;
+  onClick?: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 }
 
-export function PastaCard({ pasta }: PastaProps) {
+export function PastaCard({ pasta, onClick }: PastaProps) {
   return (
-    <div className={styles.pasta}>
-      {/*{pasta.file && pasta.file.mimetype === "image/png" && (*/}
-      {/*  <img*/}
-      {/*    className={styles.pasta__media}*/}
-      {/*    src={pasta.file.url}*/}
-      {/*    alt={pasta.keywords}*/}
-      {/*  />*/}
-      {/*)}*/}
+    <button className={styles.pasta} onClick={onClick} type="button">
       {pasta.file?.mimetype.split("/")[0] === "image" && (
         <img
           className={styles.pasta__media}
@@ -37,10 +31,12 @@ export function PastaCard({ pasta }: PastaProps) {
           Your browser does not support the video tag.
         </video>
       )}
-      {pasta.text && <Typography>{pasta.text}</Typography>}
+      {pasta.text && (
+        <Typography className={styles.pasta__text}>{pasta.text}</Typography>
+      )}
       <Typography variant={"muted"} className={styles.pasta__description}>
         {pasta.keywords}
       </Typography>
-    </div>
+    </button>
   );
 }

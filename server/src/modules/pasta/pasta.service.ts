@@ -5,6 +5,7 @@ import { CreatePastaDto } from './dto/create-pasta.dto';
 // import * as firebaseAdmin from 'firebase-admin';
 import { StorageService } from '../../core/storage/storage.service';
 import { ConfigService } from '@nestjs/config/dist/config.service';
+import { UpdatePastaDto } from './dto/update-pasta.dto';
 
 @Injectable()
 export class PastaService {
@@ -60,5 +61,22 @@ export class PastaService {
         : {}),
     });
     return await this.pastaRepository.save(pasta);
+  }
+
+  async update(id: number, uid: string, updatePastaDto: UpdatePastaDto) {
+    return await this.pastaRepository.update(
+      {
+        id: id,
+        owner: { uid },
+      },
+      updatePastaDto,
+    );
+  }
+
+  async remove(id: number, uid: string) {
+    return await this.pastaRepository.delete({
+      id: id,
+      owner: { uid },
+    });
   }
 }

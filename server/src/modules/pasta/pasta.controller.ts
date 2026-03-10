@@ -1,7 +1,10 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
+  Param,
+  Patch,
   Post,
   Query,
   Req,
@@ -15,6 +18,7 @@ import { Request } from 'express';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { AnyAuthGuard } from '../auth/any-auth.guard';
 import { FileValidationPipe } from '../../core/storage/file-validation.pipe';
+import { UpdatePastaDto } from './dto/update-pasta.dto';
 
 @UseGuards(AnyAuthGuard)
 @Controller('pasta')
@@ -34,5 +38,19 @@ export class PastaController {
     @UploadedFile(new FileValidationPipe()) file?: Express.Multer.File,
   ) {
     return await this.pastaService.create(req.user!.uid, createPastaDto, file);
+  }
+
+  @Patch(':id')
+  async edit(
+    @Param('id') id: string,
+    @Req() req: Request,
+    @Body() updatePastaDto: UpdatePastaDto,
+  ) {
+    return await this.pastaService.update(+id, req.user!.uid, updatePastaDto);
+  }
+
+  @Delete(':id')
+  async remove(@Req() req: Request, @Param('id') id: string) {
+    return await this.pastaService.remove(+id, req.user!.uid);
   }
 }
