@@ -3,7 +3,7 @@ import { getAuth } from "@/shared/api/firebase";
 import { onIdTokenChanged } from "@firebase/auth";
 
 export const http = axios.create({
-  baseURL: import.meta.env.VITE_API_URL,
+  baseURL: "/api",
 });
 
 http.interceptors.request.use(async (config) => {

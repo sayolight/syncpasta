@@ -7,12 +7,12 @@ services:
     volumes:
       - ./server:/app
     ports:
-      - "3000:3000"
       - "9229:9229"
     env_file:
       - .env.dev
     depends_on:
       - db
+      - s3
 
   client:
     container_name: syncpasta-client
@@ -21,13 +21,9 @@ services:
       dockerfile: Dockerfile.dev
     volumes:
       - ./client:/app
-    ports:
-      - "5173:5173"
     depends_on:
       - server
-      - firebase
-    environment:
-      VITE_API_URL: http://localhost/api
+#      - firebase
 
   db:
     container_name: syncpasta-db
@@ -38,20 +34,18 @@ services:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB}
-    ports:
-      - "5432:5432"
 
-  firebase:
-    container_name: syncpasta-firebase
-    environment:
-      FIREBASE_PROJECT_ID: ${FIREBASE_PROJECT_ID}
-    build:
-      context: ./firebase
-      dockerfile: Dockerfile
-    ports:
-      - "4000:4000"
-      - "9099:9099"
-      - "4500:4500"
+#  firebase:
+#    container_name: syncpasta-firebase
+#    environment:
+#      FIREBASE_PROJECT_ID: ${FIREBASE_PROJECT_ID}
+#    build:
+#      context: ./firebase
+#      dockerfile: Dockerfile
+#    ports:
+#      - "4000:4000"
+#      - "9099:9099"
+#      - "4500:4500"
 
   s3:
     container_name: syncpasta-s3
