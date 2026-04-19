@@ -5,6 +5,7 @@ import AuthPage from "@pages/Auth/AuthPage.tsx";
 import ApplicationsPage from "@pages/Applications/ApplicationsPage.tsx";
 import { ErrorBoundary } from "@pages/ErrorBoundary/ErrorBoundary.tsx";
 import GalleryPage from "@pages/Gallery/GalleryPage.tsx";
+import AccountPage from "@pages/Account/AccountPage.tsx";
 
 const router = createBrowserRouter([
   {
@@ -18,6 +19,10 @@ const router = createBrowserRouter([
       {
         path: "/auth",
         element: <AuthPage />,
+      },
+      {
+        path: "/account",
+        element: <AccountPage />,
       },
       {
         path: "/applications",
