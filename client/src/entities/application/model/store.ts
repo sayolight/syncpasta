@@ -6,7 +6,7 @@ interface ApplicationState {
 
   fetch: () => Promise<void>;
   add: (app: Application) => void;
-  update: (app: Application) => void;
+  update: (app: Partial<Application> & { id: string }) => void;
   remove: (id: string) => void;
 }
 
@@ -26,7 +26,7 @@ export const useApplicationStore = create<ApplicationState>((set) => ({
   update: (updatedApp) => {
     set((state) => ({
       applications: state.applications.map((app) =>
-        app.id === updatedApp.id ? updatedApp : app,
+        app.id === updatedApp.id ? { ...app, ...updatedApp } : app,
       ),
     }));
   },

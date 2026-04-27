@@ -27,7 +27,7 @@ export class PastaController {
 
   @Get()
   async findByUser(@Req() req: Request, @Query('query') query: string) {
-    return await this.pastaService.findByUser(req.user!.uid, query);
+    return await this.pastaService.findByUser(req, query);
   }
 
   @Post()
@@ -37,7 +37,7 @@ export class PastaController {
     @Body() createPastaDto: CreatePastaDto,
     @UploadedFile(new FileValidationPipe()) file?: Express.Multer.File,
   ) {
-    return await this.pastaService.create(req.user!.uid, createPastaDto, file);
+    return await this.pastaService.create(req, createPastaDto, file);
   }
 
   @Patch(':id')
@@ -46,11 +46,11 @@ export class PastaController {
     @Req() req: Request,
     @Body() updatePastaDto: UpdatePastaDto,
   ) {
-    return await this.pastaService.update(+id, req.user!.uid, updatePastaDto);
+    return await this.pastaService.update(+id, req, updatePastaDto);
   }
 
   @Delete(':id')
   async remove(@Req() req: Request, @Param('id') id: string) {
-    return await this.pastaService.remove(+id, req.user!.uid);
+    return await this.pastaService.remove(+id, req);
   }
 }

@@ -1,5 +1,12 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { User } from '../../users/entities/user.entity';
+import { ApplicationLog } from './application-log.entity';
 
 @Entity()
 export class Application {
@@ -20,4 +27,10 @@ export class Application {
 
   @ManyToOne(() => User, (user) => user.pastas)
   owner: User;
+
+  @OneToMany(
+    () => ApplicationLog,
+    (applicationLog) => applicationLog.application,
+  )
+  logs: ApplicationLog[];
 }

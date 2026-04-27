@@ -4,23 +4,40 @@ import { Pasta } from './entities/pasta.entity';
 import { CreatePastaDto } from './dto/create-pasta.dto';
 import { StorageService } from '../../core/storage/storage.service';
 import { UpdatePastaDto } from './dto/update-pasta.dto';
+import { ApplicationService } from '../applications/application.service';
+import { ApplicationLogType } from '../applications/entities/application-log.entity';
+import { Request } from 'express';
 
 @Injectable()
 export class PastaService {
   constructor(
-    @Inject('PASTA_REPOSITORY') private pastaRepository: Repository<Pasta>,
-    private storageService: StorageService,
+    @Inject('PASTA_REPOSITORY')
+    private readonly pastaRepository: Repository<Pasta>,
+    private readonly storageService: StorageService,
+    private readonly applicationService: ApplicationService,
   ) {}
 
-  async findByUser(uid: string, query?: string) {
-    return await this.pastaRepository.findBy({
-      owner: { uid },
+  async findByUser(req: Request, query?: string) {
+    const findRequest = await this.pastaRepository.findBy({
+      owner: { uid: req.user!.uid },
       ...(query ? { keywords: Like(`%${query}%`) } : {}),
     });
+
+    if (req.application) {
+      this.applicationService
+        .createLog({
+          applicationId: req.application.id,
+          type: ApplicationLogType.PASTA_QUERY,
+          meta: { query, results_count: findRequest.length },
+        })
+        .catch(() => {});
+    }
+
+    return findRequest;
   }
 
   async create(
-    uid: string,
+    req: Request,
     createPastaDto: CreatePastaDto,
     file?: Express.Multer.File,
   ) {
@@ -32,12 +49,12 @@ export class PastaService {
       file &&
       (await this.storageService.uploadFile(
         file,
-        `${uid}-${new Date().getTime()}`,
+        `${req.user!.uid}-${new Date().getTime()}`,
         file.mimetype,
       ));
 
     const pasta = this.pastaRepository.create({
-      owner: { uid },
+      owner: { uid: req.user!.uid },
       keywords: createPastaDto.keywords,
       text: createPastaDto.text,
       ...(file
@@ -52,23 +69,67 @@ export class PastaService {
           }
         : {}),
     });
-    return await this.pastaRepository.save(pasta);
+    const createRequest = await this.pastaRepository.save(pasta);
+
+    if (createRequest?.id && req.application) {
+      this.applicationService
+        .createLog({
+          applicationId: req.application.id,
+          type: ApplicationLogType.PASTA_CREATE,
+          meta: {
+            id: createRequest.id,
+            file: createRequest.file,
+            text: createRequest.text,
+            keywords: createRequest.keywords,
+          },
+        })
+        .catch(() => {});
+    }
+    return createRequest;
   }
 
-  async update(id: number, uid: string, updatePastaDto: UpdatePastaDto) {
-    return await this.pastaRepository.update(
+  async update(id: number, req: Request, updatePastaDto: UpdatePastaDto) {
+    const updateRequest = await this.pastaRepository.update(
       {
         id: id,
-        owner: { uid },
+        owner: { uid: req.user!.uid },
       },
       updatePastaDto,
     );
+
+    if (updateRequest.affected && req.application) {
+      this.applicationService
+        .createLog({
+          applicationId: req.application.id,
+          type: ApplicationLogType.PASTA_UPDATE,
+          meta: {
+            id: id,
+            keywords: updatePastaDto.keywords,
+            text: updatePastaDto.text,
+          },
+        })
+        .catch(() => {});
+    }
+
+    return updateRequest;
   }
 
-  async remove(id: number, uid: string) {
-    return await this.pastaRepository.delete({
+  async remove(id: number, req: Request) {
+    const removeRequest = await this.pastaRepository.delete({
       id: id,
-      owner: { uid },
+      owner: { uid: req.user!.uid },
     });
+
+    if (removeRequest.affected && req.application) {
+      this.applicationService
+        .createLog({
+          applicationId: req.application.id,
+          type: ApplicationLogType.PASTA_REMOVE,
+          meta: { id },
+        })
+        .catch(() => {});
+    }
+
+    return removeRequest.affected;
   }
 }
