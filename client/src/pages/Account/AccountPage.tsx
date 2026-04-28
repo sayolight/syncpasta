@@ -2,6 +2,7 @@ import { Block } from "@ui/block";
 import { Button } from "@ui/button";
 import { Input } from "@ui/input";
 import { Typography } from "@/shared/ui";
+import { PasswordResetButton } from "@/features/auth/password-reset/ui/PasswordResetButton.tsx";
 
 export default function AccountPage() {
   return (
@@ -16,14 +17,15 @@ export default function AccountPage() {
         <Button>update</Button>
       </Block>
       <Block title="change password">
-        <Input title="old password" type="password" placeholder={"*********"} />
-        <Input title="new password" type="password" placeholder={"*********"} />
-        <Input
-          title="repeat new password"
-          type="password"
-          placeholder={"*********"}
-        />
-        <Button>update</Button>
+        <PasswordResetButton />
+        {/*<Input title="old password" type="password" placeholder={"*********"} />*/}
+        {/*<Input title="new password" type="password" placeholder={"*********"} />*/}
+        {/*<Input*/}
+        {/*  title="repeat new password"*/}
+        {/*  type="password"*/}
+        {/*  placeholder={"*********"}*/}
+        {/*/>*/}
+        {/*<Button>update</Button>*/}
       </Block>
       <Button>logout</Button>
     </Block>

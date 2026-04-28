@@ -4,6 +4,7 @@ import {
   getAuth as getAuthFirebase,
   onAuthStateChanged,
   createUserWithEmailAndPassword,
+  sendPasswordResetEmail as sendPasswordResetEmailFirebase,
   type User,
 } from "@firebase/auth";
 import { auth, app } from "@/shared/config/firebase.ts";
@@ -22,6 +23,10 @@ export const signUp = (email: string, password: string) => {
 
 export const onChange = (cb: (user: User | null) => void) => {
   return onAuthStateChanged(auth, cb);
+};
+
+export const sendPasswordResetEmail = (email: string) => {
+  return sendPasswordResetEmailFirebase(auth, email);
 };
 
 export const getAuth = () => {

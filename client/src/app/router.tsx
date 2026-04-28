@@ -6,6 +6,7 @@ import ApplicationsPage from "@pages/Applications/ApplicationsPage.tsx";
 import { ErrorBoundary } from "@pages/ErrorBoundary/ErrorBoundary.tsx";
 import GalleryPage from "@pages/Gallery/GalleryPage.tsx";
 import AccountPage from "@pages/Account/AccountPage.tsx";
+import PasswordResetPage from "@pages/Account/PasswordResetPage.tsx";
 
 const router = createBrowserRouter([
   {
@@ -23,6 +24,10 @@ const router = createBrowserRouter([
       {
         path: "/account",
         element: <AccountPage />,
+      },
+      {
+        path: "/account/password-reset",
+        element: <PasswordResetPage />,
       },
       {
         path: "/applications",
