@@ -3,8 +3,12 @@ import { Button } from "@ui/button";
 import { Input } from "@ui/input";
 import { Typography } from "@/shared/ui";
 import { Link } from "react-router";
+import { useState } from "react";
+import { EmailUpdateButton } from "@/features/auth/email-update/ui/EmailUpdateButton.tsx";
 
 export default function AccountPage() {
+  const [email, setEmail] = useState("");
+
   return (
     <Block isCard={false}>
       <Block title="account info">
@@ -12,9 +16,13 @@ export default function AccountPage() {
         <Typography variant={"muted"}>you have totally 361 pastas</Typography>
       </Block>
       <Block title="change email">
-        <Input title="old email" type="email" placeholder={"old@mail.com"} />
-        <Input title="new email" type="email" placeholder={"new@mail.com"} />
-        <Button>update</Button>
+        <Input
+          type={"email"}
+          placeholder={"newmail@mail.com"}
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <EmailUpdateButton email={email} />
       </Block>
       <Block title="change password">
         <Link to={{ pathname: "/account/password-reset" }}>

@@ -5,6 +5,7 @@ import {
   onAuthStateChanged,
   createUserWithEmailAndPassword,
   sendPasswordResetEmail as sendPasswordResetEmailFirebase,
+  verifyBeforeUpdateEmail as verifyBeforeUpdateEmailFirebase,
   type User,
 } from "@firebase/auth";
 import { auth, app } from "@/shared/config/firebase.ts";
@@ -27,6 +28,13 @@ export const onChange = (cb: (user: User | null) => void) => {
 
 export const sendPasswordResetEmail = (email: string) => {
   return sendPasswordResetEmailFirebase(auth, email);
+};
+
+export const verifyBeforeUpdateEmail = (email: string) => {
+  if (!auth.currentUser) {
+    throw new Error("NOT_AUTHORIZED");
+  }
+  return verifyBeforeUpdateEmailFirebase(auth.currentUser, email);
 };
 
 export const getAuth = () => {
