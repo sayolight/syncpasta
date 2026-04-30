@@ -1,14 +1,12 @@
-import { type Pasta, PastaCard } from "@/entities/pasta";
+import { type Pasta, PastaCard, usePastaStore } from "@/entities/pasta";
 import styles from "./PastaBoard.module.scss";
 import { EditPastaForm } from "@/features/pasta";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { usePastaSearch } from "@/features/pasta/search/model/usePastaSearch.ts";
 
-interface PastaBoardProps {
-  pasta: Pasta[];
-  onUpdate: () => void;
-}
-
-export default function PastaBoard({ pasta, onUpdate }: PastaBoardProps) {
+export default function PastaBoard() {
+  const { pastas } = usePastaStore();
+  const { pastaSearch } = usePastaSearch();
   const [editModal, setEditModal] = useState(false);
   const [currentPasta, setCurrentPasta] = useState<Pasta>();
 
@@ -17,18 +15,25 @@ export default function PastaBoard({ pasta, onUpdate }: PastaBoardProps) {
     setCurrentPasta(pasta);
   };
 
+  useEffect(() => {
+    pastaSearch().then();
+  }, []);
+
   return (
     <div className={styles.pasta_board}>
       {currentPasta && (
         <EditPastaForm
           pasta={currentPasta}
-          onUpdate={onUpdate}
           isOpen={editModal}
           setIsOpen={setEditModal}
         />
       )}
-      {pasta.map((p) => (
-        <PastaCard onClick={() => openEditModal(p)} pasta={p} key={p.id} />
+      {pastas.map((pasta) => (
+        <PastaCard
+          onClick={() => openEditModal(pasta)}
+          pasta={pasta}
+          key={pasta.id}
+        />
       ))}
     </div>
   );

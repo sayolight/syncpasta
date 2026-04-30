@@ -1,11 +1,13 @@
 import { useState } from "react";
-import type { Pasta } from "@/entities/pasta";
+import { usePastaStore } from "@/entities/pasta";
 import { AxiosError } from "axios";
-import { http } from "@/shared/api/https.ts";
+import { updatePastaRequest } from "@/entities/pasta/api/updatePastaRequest.ts";
+import { removePastaRequest } from "@/entities/pasta/api/removePastaRequest.ts";
 
-export function useEditPasta(onUpdate: () => void) {
+export function useEditPasta() {
   const [isLoading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>();
+  const { update, remove } = usePastaStore();
 
   const editPasta = async (
     id: number,
@@ -14,8 +16,8 @@ export function useEditPasta(onUpdate: () => void) {
     try {
       setLoading(true);
       setError(null);
-      await http.patch<Pasta>("/pasta/" + id, data);
-      onUpdate();
+      const updatePastaResponse = await updatePastaRequest(id, data);
+      update(updatePastaResponse.data);
     } catch (e) {
       if (e instanceof AxiosError) {
         setError(e.name);
@@ -29,8 +31,8 @@ export function useEditPasta(onUpdate: () => void) {
     try {
       setLoading(true);
       setError(null);
-      await http.delete<Pasta>("/pasta/" + id);
-      onUpdate();
+      await removePastaRequest(id);
+      remove(id);
     } catch (e) {
       if (e instanceof AxiosError) {
         setError(e.name);

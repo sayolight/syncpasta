@@ -11,3 +11,9 @@ export interface Pasta {
   text?: string;
   keywords: string;
 }
+
+export interface CreatePastaDTO {
+  file?: File;
+  text?: string;
+  keywords: string;
+}

@@ -8,14 +8,9 @@ import { Alert } from "@ui/alert";
 interface CreatePastaFormProps {
   isOpen: boolean;
   setIsOpen: (arg: boolean) => void;
-  onCreated: () => void;
 }
 
-export function CreatePastaForm({
-  isOpen,
-  setIsOpen,
-  onCreated,
-}: CreatePastaFormProps) {
+export function CreatePastaForm({ isOpen, setIsOpen }: CreatePastaFormProps) {
   const { createPasta, isLoading, error } = useCreatePasta();
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -23,7 +18,6 @@ export function CreatePastaForm({
 
     await createPasta(formData);
     setIsOpen(false);
-    onCreated();
   };
 
   return (

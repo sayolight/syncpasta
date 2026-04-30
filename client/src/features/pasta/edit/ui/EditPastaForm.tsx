@@ -11,16 +11,14 @@ interface EditPastaFormProps {
   isOpen: boolean;
   setIsOpen: (arg: boolean) => void;
   pasta: Pasta;
-  onUpdate: () => void;
 }
 
 export function EditPastaForm({
   isOpen,
   setIsOpen,
   pasta,
-  onUpdate,
 }: EditPastaFormProps) {
-  const { editPasta, removePasta, isLoading, error } = useEditPasta(onUpdate);
+  const { editPasta, removePasta, isLoading, error } = useEditPasta();
   const [keywords, setKeywords] = useState("");
   const [text, setText] = useState("");
 
@@ -70,6 +68,7 @@ export function EditPastaForm({
         title={"text"}
         value={text}
         onChange={(e) => setText(e.target.value)}
+        disabled={isLoading}
       ></Textarea>
       <Input
         title={"keywords"}
