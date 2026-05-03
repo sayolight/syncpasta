@@ -11,8 +11,8 @@ export default function PastaBoard() {
   const [currentPasta, setCurrentPasta] = useState<Pasta>();
 
   const openEditModal = (pasta: Pasta) => {
-    setEditModal(true);
     setCurrentPasta(pasta);
+    setEditModal(true);
   };
 
   useEffect(() => {
@@ -23,6 +23,7 @@ export default function PastaBoard() {
     <div className={styles.pasta_board}>
       {currentPasta && (
         <EditPastaForm
+          key={currentPasta.id}
           pasta={currentPasta}
           isOpen={editModal}
           setIsOpen={setEditModal}

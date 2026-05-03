@@ -25,7 +25,7 @@ export const usePastaStore = create<PastaState>((set) => ({
   update: (updatedPasta) => {
     set((state) => ({
       pastas: state.pastas.map((pasta) =>
-        pasta.id === pasta.id ? { ...pasta, ...updatedPasta } : pasta,
+        pasta.id === updatedPasta.id ? { ...pasta, ...updatedPasta } : pasta,
       ),
     }));
   },
