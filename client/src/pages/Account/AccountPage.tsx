@@ -1,8 +1,8 @@
 import { Block } from "@ui/block";
-import { Button } from "@ui/button";
 import { Typography } from "@/shared/ui";
 import PasswordResetButton from "@/widgets/password-reset/ui/PaswordResetButton.tsx";
 import EmailUpdateForm from "@/widgets/email-update/ui/EmailUpdateForm.tsx";
+import { SignOutButton } from "@/features/auth/sign-out/ui/SignOutButton.tsx";
 
 export default function AccountPage() {
   return (
@@ -17,7 +17,7 @@ export default function AccountPage() {
       <Block title="change password">
         <PasswordResetButton />
       </Block>
-      <Button>logout</Button>
+      <SignOutButton />
     </Block>
   );
 }
