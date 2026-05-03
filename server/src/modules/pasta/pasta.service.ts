@@ -1,4 +1,9 @@
-import { BadRequestException, Inject, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Inject,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { Like, Repository } from 'typeorm';
 import { Pasta } from './entities/pasta.entity';
 import { CreatePastaDto } from './dto/create-pasta.dto';
@@ -89,15 +94,23 @@ export class PastaService {
   }
 
   async update(id: number, req: Request, updatePastaDto: UpdatePastaDto) {
-    const updateRequest = await this.pastaRepository.update(
-      {
-        id: id,
+    const pasta = await this.pastaRepository.findOne({
+      where: {
+        id,
         owner: { uid: req.user!.uid },
       },
-      updatePastaDto,
-    );
+    });
 
-    if (updateRequest.affected && req.application) {
+    if (!pasta) {
+      throw new NotFoundException('Pasta not found');
+    }
+
+    const updatedPasta = await this.pastaRepository.save({
+      ...pasta,
+      ...updatePastaDto,
+    });
+
+    if (req.application) {
       this.applicationService
         .createLog({
           applicationId: req.application.id,
@@ -111,7 +124,7 @@ export class PastaService {
         .catch(() => {});
     }
 
-    return updateRequest;
+    return updatedPasta;
   }
 
   async remove(id: number, req: Request) {
