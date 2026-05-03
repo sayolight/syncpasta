@@ -7,6 +7,7 @@ import { ErrorBoundary } from "@pages/ErrorBoundary/ErrorBoundary.tsx";
 import GalleryPage from "@pages/Gallery/GalleryPage.tsx";
 import AccountPage from "@pages/Account/AccountPage.tsx";
 import PasswordResetPage from "@pages/Account/PasswordResetPage.tsx";
+import { AuthRoute } from "@/app/layout/AuthRoute.tsx";
 
 const router = createBrowserRouter([
   {
@@ -22,20 +23,26 @@ const router = createBrowserRouter([
         element: <AuthPage />,
       },
       {
-        path: "/account",
-        element: <AccountPage />,
+        element: <AuthRoute />,
+        errorElement: <ErrorBoundary />,
+        children: [
+          {
+            path: "/account",
+            element: <AccountPage />,
+          },
+          {
+            path: "/applications",
+            element: <ApplicationsPage />,
+          },
+          {
+            path: "/gallery",
+            element: <GalleryPage />,
+          },
+        ],
       },
       {
         path: "/account/password-reset",
         element: <PasswordResetPage />,
-      },
-      {
-        path: "/applications",
-        element: <ApplicationsPage />,
-      },
-      {
-        path: "/gallery",
-        element: <GalleryPage />,
       },
     ],
   },
