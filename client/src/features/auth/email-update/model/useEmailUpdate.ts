@@ -5,12 +5,15 @@ import { FirebaseError } from "@firebase/app";
 export function useEmailUpdate() {
   const [isLoading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>();
+  const [success, setSuccess] = useState<boolean>(false);
 
   const emailUpdate = async (email: string) => {
     try {
       setLoading(true);
+      setSuccess(false);
       await firebase.verifyBeforeUpdateEmail(email);
       setError(null);
+      setSuccess(true);
     } catch (e) {
       if (e instanceof FirebaseError) {
         setError(e.code);
@@ -20,5 +23,5 @@ export function useEmailUpdate() {
     }
   };
 
-  return { emailUpdate, isLoading, error };
+  return { emailUpdate, isLoading, error, success };
 }

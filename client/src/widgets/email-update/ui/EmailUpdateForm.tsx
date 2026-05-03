@@ -5,12 +5,13 @@ import { useState } from "react";
 import { Alert } from "@ui/alert";
 
 export default function EmailUpdateForm() {
-  const { emailUpdate, isLoading, error } = useEmailUpdate();
+  const { emailUpdate, isLoading, error, success } = useEmailUpdate();
   const [email, setEmail] = useState("");
 
   return (
     <>
       {error && <Alert title={"⚠ error!"}>{error}</Alert>}
+      {success && <Alert title={"✔ success!"}>check your email</Alert>}
       <Input
         type={"email"}
         placeholder={"newmail@mail.com"}
