@@ -6,12 +6,14 @@ import { Input } from "@ui/input";
 import { Button } from "@ui/button";
 
 export default function PasswordResetForm() {
-  const { sendPasswordResetEmail, error, isLoading } = usePasswordReset();
+  const { sendPasswordResetEmail, error, success, isLoading } =
+    usePasswordReset();
   const [email, setEmail] = useState("");
 
   return (
     <Block title={"reset your password"}>
       {error && <Alert title={"⚠ error!"}>{error}</Alert>}
+      {success && <Alert title={"✔ success!"}>check your email</Alert>}
       <Input
         type={"email"}
         placeholder={"user@mail.com"}
