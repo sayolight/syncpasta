@@ -2,8 +2,10 @@ import { Link, useLocation } from "react-router";
 import { useEffect, useState } from "react";
 import { getAuth } from "@/shared/api/firebase";
 import type { User } from "firebase/auth";
+import { useTranslation } from "react-i18next";
 
 export default function Header() {
+  const { t } = useTranslation();
   const location = useLocation();
   const [user, setUser] = useState<User | null>(null);
 
@@ -28,12 +30,14 @@ export default function Header() {
       <div className="header__nav">
         {user ? (
           <>
-            <Link to={{ pathname: "/applications" }}>applications</Link>
-            <Link to={{ pathname: "/gallery" }}>gallery</Link>
-            <Link to={{ pathname: "/account" }}>account</Link>
+            <Link to={{ pathname: "/applications" }}>
+              {t("header.applications")}
+            </Link>
+            <Link to={{ pathname: "/gallery" }}>{t("header.gallery")}</Link>
+            <Link to={{ pathname: "/account" }}>{t("header.account")}</Link>
           </>
         ) : (
-          <Link to={{ pathname: "/auth" }}>auth</Link>
+          <Link to={{ pathname: "/auth" }}>{t("header.auth")}</Link>
         )}
       </div>
     </header>

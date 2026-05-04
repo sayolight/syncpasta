@@ -64,6 +64,12 @@
       }
     }
   },
+  "header": {
+    "account": "акаунт",
+    "applications": "інтеграції",
+    "auth": "вхід",
+    "gallery": "галерея"
+  },
   "lang": {
     "title": "змінити мову"
   },

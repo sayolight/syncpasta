@@ -64,6 +64,12 @@
       }
     }
   },
+  "header": {
+    "account": "account",
+    "applications": "applications",
+    "auth": "auth",
+    "gallery": "gallery"
+  },
   "lang": {
     "title": "change language"
   },
