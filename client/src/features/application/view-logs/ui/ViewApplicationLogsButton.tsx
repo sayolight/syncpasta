@@ -1,5 +1,6 @@
 import { Button } from "@ui/button";
 import type { Application } from "@/entities/application";
+import { useTranslation } from "react-i18next";
 
 interface ViewApplicationLogsButtonProps {
   application: Application;
@@ -9,5 +10,10 @@ interface ViewApplicationLogsButtonProps {
 export function ViewApplicationLogsButton({
   setViewLogsModal,
 }: ViewApplicationLogsButtonProps) {
-  return <Button onClick={() => setViewLogsModal(true)}>view logs</Button>;
+  const { t } = useTranslation();
+  return (
+    <Button onClick={() => setViewLogsModal(true)}>
+      {t("application.logs.button")}
+    </Button>
+  );
 }

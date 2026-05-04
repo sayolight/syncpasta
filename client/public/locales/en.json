@@ -1,0 +1,120 @@
+{
+  "account": {
+    "email": {
+      "update": {
+        "success": "check your email",
+        "title": "change email"
+      }
+    },
+    "password": {
+      "update": {
+        "send_link": "send reset password link",
+        "title": "change password"
+      }
+    }
+  },
+  "application": {
+    "create": {
+      "button": "+ create a new application",
+      "confirm": "create",
+      "description": {
+        "placeholder": "i'm a cool app",
+        "title": "description"
+      },
+      "name": {
+        "placeholder": "cool app",
+        "title": "application name"
+      },
+      "title": "create application"
+    },
+    "key": {
+      "copy": "copy",
+      "remove": "remove",
+      "reset": "reset",
+      "unobtainable": "the token can only be obtained upon creation. reset it to obtain a new one."
+    },
+    "logs": {
+      "button": "view logs",
+      "title": "logs"
+    }
+  },
+  "auth": {
+    "sign": {
+      "email": {
+        "placeholder": "user@mail.com",
+        "title": "email"
+      },
+      "in": {
+        "title": "sign in"
+      },
+      "or": "= or =",
+      "out": {
+        "title": "sign out"
+      },
+      "password": {
+        "confirm": "confirm password",
+        "placeholder": "**********",
+        "title": "password"
+      },
+      "up": {
+        "email": {
+          "title": "email"
+        },
+        "title": "sign up"
+      }
+    }
+  },
+  "main": {
+    "integration": {
+      "buttons": {
+        "applications": "applications",
+        "documentation": "documentation"
+      },
+      "description": "create your own integration with syncpasta or use any ready-made one.",
+      "header": "integration"
+    },
+    "organize": {
+      "description": "search for your media simply by using keywords.",
+      "header": "organize",
+      "input": {
+        "title": "keywords",
+        "value": "funny cat gif"
+      }
+    },
+    "welcome": {
+      "description": "a service for synchronizing text and media files between any applications.",
+      "get_started": "get started",
+      "header": "welcome to syncpasta"
+    }
+  },
+  "pasta": {
+    "create": {
+      "button": "+ create a new pasta",
+      "confirm": "create",
+      "keywords": {
+        "placeholder": "text keyword greeting",
+        "title": "keywords"
+      },
+      "text": {
+        "placeholder": "hello world",
+        "title": "text (optional)"
+      },
+      "title": "create pasta"
+    },
+    "edit": {
+      "button": {
+        "delete": "delete",
+        "edit": "edit"
+      },
+      "keywords": "keywords",
+      "text": "text",
+      "title": "edit pasta"
+    },
+    "search": {
+      "input": {
+        "placeholder": "where is my funny gif with monkeys...",
+        "title": "search"
+      }
+    }
+  }
+}

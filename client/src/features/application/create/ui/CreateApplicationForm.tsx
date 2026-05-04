@@ -5,6 +5,7 @@ import { useCreateApplication } from "@/features/application/create/model/useCre
 import { Alert } from "@ui/alert";
 import * as React from "react";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 interface CreateApplicationFormProps {
   isOpen: boolean;
@@ -15,6 +16,7 @@ export function CreateApplicationForm({
   isOpen,
   setIsOpen,
 }: CreateApplicationFormProps) {
+  const { t } = useTranslation();
   const { createApplication, isLoading, error } = useCreateApplication();
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -35,12 +37,12 @@ export function CreateApplicationForm({
       <Modal
         active={isOpen}
         onClose={() => setIsOpen(false)}
-        title={"create application"}
+        title={t("application.create.title")}
       >
         {error && <Alert title={"⚠ error!"}>{error}</Alert>}
         <Input
-          title={"application name"}
-          placeholder={"cool app"}
+          title={t("application.create.name.title")}
+          placeholder={t("application.create.name.placeholder")}
           value={name}
           onChange={(e) => {
             setName(e.target.value);
@@ -48,8 +50,8 @@ export function CreateApplicationForm({
           disabled={isLoading}
         ></Input>
         <Input
-          title={"description"}
-          placeholder={"i am a cool app"}
+          title={t("application.create.description.title")}
+          placeholder={t("application.create.description.placeholder")}
           disabled={isLoading}
           value={description}
           onChange={(e) => {
@@ -57,7 +59,7 @@ export function CreateApplicationForm({
           }}
         ></Input>
         <Button type={"submit"} variant={"primary"} disabled={isLoading}>
-          create
+          {t("application.create.confirm")}
         </Button>
       </Modal>
     </form>

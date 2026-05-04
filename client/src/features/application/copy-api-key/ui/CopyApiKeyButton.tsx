@@ -1,12 +1,14 @@
 import { Button } from "@ui/button";
 import type { Application } from "@/entities/application";
 import { useCopyApiKey } from "@/features/application/copy-api-key/model/useCopyApiKey.ts";
+import { useTranslation } from "react-i18next";
 
 interface CopyApiKeyButtonProps {
   application: Application;
 }
 
 export function CopyApiKeyButton({ application }: CopyApiKeyButtonProps) {
+  const { t } = useTranslation();
   const { copyApiKey } = useCopyApiKey();
 
   return (
@@ -14,7 +16,7 @@ export function CopyApiKeyButton({ application }: CopyApiKeyButtonProps) {
       disabled={!application.key}
       onClick={() => copyApiKey(application.key)}
     >
-      copy
+      {t("application.key.copy")}
     </Button>
   );
 }

@@ -5,6 +5,7 @@ import { useViewApplicationLogs } from "@/features/application/view-logs/model/u
 import type { Application } from "@/entities/application";
 import { Timeline } from "@ui/timeline";
 import { Input } from "@ui/input";
+import { useTranslation } from "react-i18next";
 
 interface ViewApplicationLogsModalProps {
   isOpen: boolean;
@@ -17,6 +18,7 @@ export function ViewApplicationLogsModal({
   setIsOpen,
   application,
 }: ViewApplicationLogsModalProps) {
+  const { t } = useTranslation();
   const { viewLogs, isLoading, error } = useViewApplicationLogs();
 
   useEffect(() => {
@@ -24,7 +26,11 @@ export function ViewApplicationLogsModal({
   }, []);
 
   return (
-    <Modal title={"view logs"} active={isOpen} onClose={() => setIsOpen(false)}>
+    <Modal
+      title={t("application.logs.title")}
+      active={isOpen}
+      onClose={() => setIsOpen(false)}
+    >
       {error && <Alert title={"⚠ error!"}>{error}</Alert>}
       {isLoading ?? "loading..."}
       <Timeline

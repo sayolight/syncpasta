@@ -5,8 +5,10 @@ import { ApplicationCard } from "@/widgets/application-card/ui/ApplicationCard.t
 import type { Application } from "@/entities/application";
 import { CreateApplicationForm } from "@/features/application/create/ui/CreateApplicationForm.tsx";
 import { useApplicationStore } from "@/entities/application/model/store.ts";
+import { useTranslation } from "react-i18next";
 
 export default function ApplicationsPage() {
+  const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const { applications, fetch } = useApplicationStore();
 
@@ -18,7 +20,7 @@ export default function ApplicationsPage() {
     <>
       <Block isCard={false}>
         <Button variant={"primary"} onClick={() => setIsOpen(true)}>
-          + create a new application
+          {t("application.create.button")}
         </Button>
 
         {applications.map((application: Application) => (

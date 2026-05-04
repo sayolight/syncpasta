@@ -6,6 +6,7 @@ import { Button } from "@ui/button";
 import { useEditPasta } from "@/features/pasta/edit/model/useEditPasta.ts";
 import { Alert } from "@ui/alert";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 interface EditPastaFormProps {
   isOpen: boolean;
@@ -18,6 +19,7 @@ export function EditPastaForm({
   setIsOpen,
   pasta,
 }: EditPastaFormProps) {
+  const { t } = useTranslation();
   const { editPasta, removePasta, isLoading, error } = useEditPasta();
   const [keywords, setKeywords] = useState("");
   const [text, setText] = useState("");
@@ -29,7 +31,7 @@ export function EditPastaForm({
 
   return (
     <Modal
-      title={"edit pasta"}
+      title={t("pasta.edit.title")}
       active={isOpen}
       onClose={() => setIsOpen(false)}
     >
@@ -65,13 +67,13 @@ export function EditPastaForm({
       {/*  disabled={isLoading}*/}
       {/*></Input>*/}
       <Textarea
-        title={"text"}
+        title={t("pasta.edit.text")}
         value={text}
         onChange={(e) => setText(e.target.value)}
         disabled={isLoading}
       ></Textarea>
       <Input
-        title={"keywords"}
+        title={t("pasta.edit.keywords")}
         value={keywords}
         onChange={(e) => setKeywords(e.target.value)}
         disabled={isLoading}
@@ -81,14 +83,14 @@ export function EditPastaForm({
         onClick={() => editPasta(pasta.id, { keywords, text })}
         disabled={isLoading}
       >
-        edit
+        {t("pasta.edit.button.edit")}
       </Button>
       <Button
         variant={"warning"}
         onClick={() => removePasta(pasta.id)}
         disabled={isLoading}
       >
-        delete
+        {t("pasta.edit.button.delete")}
       </Button>
     </Modal>
   );

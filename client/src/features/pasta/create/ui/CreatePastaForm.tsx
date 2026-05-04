@@ -4,6 +4,7 @@ import { Button } from "@ui/button";
 import * as React from "react";
 import { useCreatePasta } from "@/features/pasta/create/model/useCreatePasta.ts";
 import { Alert } from "@ui/alert";
+import { useTranslation } from "react-i18next";
 
 interface CreatePastaFormProps {
   isOpen: boolean;
@@ -11,6 +12,7 @@ interface CreatePastaFormProps {
 }
 
 export function CreatePastaForm({ isOpen, setIsOpen }: CreatePastaFormProps) {
+  const { t } = useTranslation();
   const { createPasta, isLoading, error } = useCreatePasta();
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -25,18 +27,18 @@ export function CreatePastaForm({ isOpen, setIsOpen }: CreatePastaFormProps) {
       <Modal
         active={isOpen}
         onClose={() => setIsOpen(false)}
-        title={"create pasta"}
+        title={t("pasta.create.title")}
       >
         {error && <Alert title={"⚠ error!"}>{error}</Alert>}
         <Input
-          title={"keywords"}
-          placeholder={"hello world"}
+          title={t("pasta.create.keywords.title")}
+          placeholder={t("pasta.create.keywords.placeholder")}
           name={"keywords"}
           disabled={isLoading}
         ></Input>
         <Input
-          title={"text (optional)"}
-          placeholder={"hello ur computer has virus"}
+          title={t("pasta.create.text.title")}
+          placeholder={t("pasta.create.text.placeholder")}
           name={"text"}
           disabled={isLoading}
         ></Input>
@@ -47,7 +49,7 @@ export function CreatePastaForm({ isOpen, setIsOpen }: CreatePastaFormProps) {
           disabled={isLoading}
         ></Input>
         <Button type={"submit"} variant={"primary"} disabled={isLoading}>
-          create
+          {t("pasta.create.confirm")}
         </Button>
       </Modal>
     </form>

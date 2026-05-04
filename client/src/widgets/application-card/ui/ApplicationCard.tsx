@@ -7,23 +7,23 @@ import { RemoveApiKeyButton } from "@/features/application/remove-api-key";
 import { ViewApplicationLogsButton } from "@/features/application/view-logs/ui/ViewApplicationLogsButton.tsx";
 import { ViewApplicationLogsModal } from "@/features/application/view-logs/ui/ViewApplicationLogsModal.tsx";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 interface ApplicationCardProps {
   application: Application;
 }
 
 export function ApplicationCard({ application }: ApplicationCardProps) {
+  const { t } = useTranslation();
   const [viewLogsModal, setViewLogsModal] = useState(false);
+
   return (
     <Block title={application.name} key={application.id}>
       <Block direction={"column"} isCard={false}>
         <Input
           disabled={!application.key}
           title={"API_KEY"}
-          value={
-            application.key ||
-            "the token can only be obtained upon creation. reset it to obtain a new one."
-          }
+          value={application.key || t("application.key.unobtainable")}
         ></Input>
       </Block>
       <Block direction={"row"} isCard={false}>

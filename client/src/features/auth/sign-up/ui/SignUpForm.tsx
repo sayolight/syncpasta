@@ -5,8 +5,10 @@ import { useState } from "react";
 import { useSignUp } from "@/features/auth/sign-up/model/useSignUp.ts";
 import * as React from "react";
 import { Alert } from "@ui/alert";
+import { useTranslation } from "react-i18next";
 
 export function SignUpForm() {
+  const { t } = useTranslation();
   const { signUp, isLoading, error } = useSignUp();
 
   const [email, setEmail] = useState("");
@@ -20,32 +22,32 @@ export function SignUpForm() {
   return (
     <>
       <form onSubmit={onSubmit}>
-        <Block title={"sign up"}>
+        <Block title={t("auth.sign.up.title")}>
           {error && <Alert title={"⚠ error!"}>{error}</Alert>}
           <Input
-            title={"email"}
+            title={t("auth.sign.email.title")}
             type={"email"}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            placeholder={"user@mail.com"}
+            placeholder={t("auth.sign.email.placeholder")}
             disabled={isLoading}
           ></Input>
           <Input
-            title={"password"}
+            title={t("auth.sign.password.title")}
             type={"password"}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            placeholder={"*************"}
+            placeholder={t("auth.sign.password.placeholder")}
             disabled={isLoading}
           ></Input>
           <Input
-            title={"confirm password"}
+            title={t("auth.sign.password.confirm")}
             type={"password"}
-            placeholder={"*************"}
+            placeholder={t("auth.sign.password.placeholder")}
             disabled={isLoading}
           ></Input>
           <Button disabled={isLoading} type="submit">
-            sign up
+            {t("auth.sign.up.title")}
           </Button>
         </Block>
       </form>
