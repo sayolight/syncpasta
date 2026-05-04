@@ -64,6 +64,9 @@
       }
     }
   },
+  "lang": {
+    "title": "change language"
+  },
   "main": {
     "integration": {
       "buttons": {
