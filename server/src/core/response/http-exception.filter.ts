@@ -20,6 +20,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
     const error: Error = {
       code: exceptionResponse.code || 'UNKNOWN_ERROR',
       message: exceptionResponse.message,
+      details: exceptionResponse.details,
     };
 
     const body: ApiResponse = {

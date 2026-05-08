@@ -3,7 +3,7 @@ import { HttpStatus } from '@nestjs/common';
 
 export class UnauthorizedException extends AppException {
   constructor() {
-    super(HttpStatus.UNAUTHORIZED, 'UNAUTHORIZED', 'Unauthorized');
+    super(HttpStatus.UNAUTHORIZED, 'Unauthorized', 'Unauthorized');
   }
 }
 
@@ -11,7 +11,7 @@ export class IdTokenExpiredException extends AppException {
   constructor() {
     super(
       HttpStatus.UNAUTHORIZED,
-      'ID_TOKEN_EXPIRED',
+      'IdTokenExpired',
       'Session expired. Please re-authenticate.',
     );
   }
@@ -19,6 +19,6 @@ export class IdTokenExpiredException extends AppException {
 
 export class InvalidTokenException extends AppException {
   constructor() {
-    super(HttpStatus.UNAUTHORIZED, 'ID_TOKEN_INVALID', 'Invalid ID token');
+    super(HttpStatus.UNAUTHORIZED, 'IdTokenInvalid', 'Invalid ID token');
   }
 }
