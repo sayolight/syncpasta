@@ -1,11 +1,7 @@
-import {
-  CanActivate,
-  ExecutionContext,
-  Injectable,
-  UnauthorizedException,
-} from '@nestjs/common';
+import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { ApplicationService } from './application.service';
 import { Request } from 'express';
+import { InvalidApiKeyException } from './application.exceptions';
 
 @Injectable()
 export class ApiKeyGuard implements CanActivate {
@@ -15,13 +11,13 @@ export class ApiKeyGuard implements CanActivate {
     const request = context.switchToHttp().getRequest<Request>();
 
     const authHeader = request.headers.authorization;
-    if (!authHeader) throw new UnauthorizedException();
+    if (!authHeader) throw new InvalidApiKeyException();
 
     const apiKey = authHeader.split(' ')[1];
-    if (!apiKey) throw new UnauthorizedException();
+    if (!apiKey) throw new InvalidApiKeyException();
 
     const validation = await this.apiKeyService.validateApiKey(apiKey);
-    if (!validation.isValid) throw new UnauthorizedException();
+    if (!validation.isValid) throw new InvalidApiKeyException();
 
     request['user'] = { uid: validation.uid! };
 
