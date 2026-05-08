@@ -3,11 +3,15 @@ import {
   ExecutionContext,
   Inject,
   Injectable,
-  UnauthorizedException,
 } from '@nestjs/common';
 import * as firebaseAdmin from 'firebase-admin';
 import { Request } from 'express';
 import { UsersService } from 'src/modules/users/users.service';
+import {
+  IdTokenExpiredException,
+  InvalidTokenException,
+  UnauthorizedException,
+} from './auth.exceptions';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -18,7 +22,6 @@ export class AuthGuard implements CanActivate {
   ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
-    console.log('AuthGuard#canActivate called');
     const request = context.switchToHttp().getRequest<Request>();
 
     const authHeader = request.headers.authorization;
@@ -31,13 +34,10 @@ export class AuthGuard implements CanActivate {
       .auth()
       .verifyIdToken(token)
       .catch((err) => {
-        console.error('Error verifying token:', err);
         if (err.code === 'auth/id-token-expired') {
-          throw new UnauthorizedException(
-            'Session expired. Please re-authenticate.',
-          );
+          throw new IdTokenExpiredException();
         }
-        throw new UnauthorizedException('Invalid token');
+        throw new InvalidTokenException();
       });
 
     request['user'] = { uid: decodedToken.uid };
