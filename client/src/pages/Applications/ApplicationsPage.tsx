@@ -1,20 +1,15 @@
 import { Block } from "@ui/block";
 import { Button } from "@/shared/ui";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { ApplicationCard } from "@/widgets/application-card/ui/ApplicationCard.tsx";
-import type { Application } from "@/entities/application";
+import { type Application, useApplications } from "@/entities/application";
 import { CreateApplicationForm } from "@/features/application/create/ui/CreateApplicationForm.tsx";
-import { useApplicationStore } from "@/entities/application/model/store.ts";
 import { useTranslation } from "react-i18next";
 
 export default function ApplicationsPage() {
   const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
-  const { applications, fetch } = useApplicationStore();
-
-  useEffect(() => {
-    fetch().then();
-  }, []);
+  const { data } = useApplications();
 
   return (
     <>
@@ -23,7 +18,7 @@ export default function ApplicationsPage() {
           {t("application.create.button")}
         </Button>
 
-        {applications.map((application: Application) => (
+        {data?.map((application: Application) => (
           <ApplicationCard
             key={application.id}
             application={application}

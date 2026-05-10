@@ -1,8 +1,7 @@
 import type { Application } from "@/entities/application";
 import { Button } from "@ui/button";
-import { useRemoveApiKey } from "@/features/application/remove-api-key/model/useRemoveApiKey.ts";
-import { useApplicationStore } from "@/entities/application/model/store.ts";
 import { useTranslation } from "react-i18next";
+import { useRemoveApplication } from "@/entities/application/api/useRemoveApplication.ts";
 
 interface RemoveApiKeyButtonProps {
   application: Application;
@@ -10,16 +9,13 @@ interface RemoveApiKeyButtonProps {
 
 export function RemoveApiKeyButton({ application }: RemoveApiKeyButtonProps) {
   const { t } = useTranslation();
-  const { remove } = useApplicationStore();
-  const { removeApiKey, isLoading } = useRemoveApiKey();
+  const { isPending, mutate } = useRemoveApplication();
 
   return (
     <Button
       variant={"warning"}
-      disabled={isLoading}
-      onClick={() =>
-        removeApiKey({ id: application.id }).then(() => remove(application.id))
-      }
+      disabled={isPending}
+      onClick={() => mutate({ id: application.id })}
     >
       {t("application.key.remove")}
     </Button>

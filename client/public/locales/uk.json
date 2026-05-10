@@ -64,6 +64,9 @@
       }
     }
   },
+  "error": {
+    "FormValidationError": "⚠ помилка форми!"
+  },
   "header": {
     "account": "акаунт",
     "applications": "інтеграції",
@@ -125,5 +128,9 @@
         "title": "пошук"
       }
     }
+  },
+  "validation": {
+    "field": "поле",
+    "isNotEmpty": "не повинно бути порожнім"
   }
 }

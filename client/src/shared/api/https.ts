@@ -6,9 +6,10 @@ export const http = axios.create({
   baseURL: "/api",
 });
 
-http.interceptors.response.use((response) => {
-  return response.data;
-});
+http.interceptors.response.use(
+  (response) => response.data,
+  (error) => Promise.reject(error.response?.data.error),
+);
 
 http.interceptors.request.use(async (config) => {
   const auth = getAuth();

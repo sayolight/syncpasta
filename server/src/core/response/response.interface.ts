@@ -16,6 +16,7 @@ interface ErrorResponse extends BaseResponse {
 export interface Error {
   code: string;
   message: string;
+  details?: any[];
 }
 
 export type ApiResponse<T = unknown> = SuccessResponse<T> | ErrorResponse;

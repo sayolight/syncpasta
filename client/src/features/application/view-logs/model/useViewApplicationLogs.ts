@@ -3,11 +3,9 @@ import { AxiosError } from "axios";
 import { http } from "@/shared/api/https.ts";
 import {
   type ApplicationLogs,
-  useApplicationStore,
 } from "@/entities/application";
 
 export function useViewApplicationLogs() {
-  const { update } = useApplicationStore();
   const [isLoading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>();
 
@@ -18,10 +16,10 @@ export function useViewApplicationLogs() {
       const logs = await http.get<ApplicationLogs[]>(
         "/applications/" + applicationId + "/logs",
       );
-      update({
-        id: applicationId,
-        logs: logs.data,
-      });
+      // update({
+      //   id: applicationId,
+      //   logs: logs.data,
+      // });
     } catch (e) {
       if (e instanceof AxiosError) {
         setError(e.name);
