@@ -1,11 +1,12 @@
 import { Modal } from "@ui/modal";
 import { Input } from "@ui/input";
 import { Button } from "@ui/button";
-import { useCreateApplication } from "@/features/application/create/model/useCreateApplication.ts";
 import { Alert } from "@ui/alert";
 import * as React from "react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useCreateApplication } from "@/entities/application/api/useCreateApplication.ts";
+import { Typography } from "@/shared/ui";
 
 interface CreateApplicationFormProps {
   isOpen: boolean;
@@ -17,19 +18,26 @@ export function CreateApplicationForm({
   setIsOpen,
 }: CreateApplicationFormProps) {
   const { t } = useTranslation();
-  const { createApplication, isLoading, error } = useCreateApplication();
+  const { isPending, error, mutate } = useCreateApplication();
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    await createApplication({
-      name,
-      description,
-    });
-    setName("");
-    setDescription("");
-    setIsOpen(false);
+
+    mutate(
+      {
+        name,
+        description,
+      },
+      {
+        onSuccess: () => {
+          setName("");
+          setDescription("");
+          setIsOpen(false);
+        },
+      },
+    );
   };
 
   return (
@@ -39,7 +47,25 @@ export function CreateApplicationForm({
         onClose={() => setIsOpen(false)}
         title={t("application.create.title")}
       >
-        {error && <Alert title={"⚠ error!"}>{error}</Alert>}
+        {error && (
+          <Alert title={t(`error.${error.code}`)}>
+            {error.details.map((detail) => (
+              <Typography key={detail.field}>
+                {t("validation.field")}{" "}
+                <b>
+                  &#34;
+                  {t(`application.create.${detail.field}.title`)}&#34;
+                </b>
+                {detail.errors.map((e) => (
+                  <>
+                    <br />
+                    <span key={e}>- {t(`validation.${e}`)}</span>
+                  </>
+                ))}
+              </Typography>
+            ))}
+          </Alert>
+        )}
         <Input
           title={t("application.create.name.title")}
           placeholder={t("application.create.name.placeholder")}
@@ -47,18 +73,18 @@ export function CreateApplicationForm({
           onChange={(e) => {
             setName(e.target.value);
           }}
-          disabled={isLoading}
+          disabled={isPending}
         ></Input>
         <Input
           title={t("application.create.description.title")}
           placeholder={t("application.create.description.placeholder")}
-          disabled={isLoading}
+          disabled={isPending}
           value={description}
           onChange={(e) => {
             setDescription(e.target.value);
           }}
         ></Input>
-        <Button type={"submit"} variant={"primary"} disabled={isLoading}>
+        <Button type={"submit"} variant={"primary"} disabled={isPending}>
           {t("application.create.confirm")}
         </Button>
       </Modal>

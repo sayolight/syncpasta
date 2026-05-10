@@ -64,6 +64,9 @@
       }
     }
   },
+  "error": {
+    "FormValidationError": "⚠ form error!"
+  },
   "header": {
     "account": "account",
     "applications": "applications",
@@ -125,5 +128,9 @@
         "title": "search"
       }
     }
+  },
+  "validation": {
+    "field": "field",
+    "isNotEmpty": "shouldn't be empty"
   }
 }

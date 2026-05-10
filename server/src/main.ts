@@ -1,6 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './modules/app/app.module';
-import { ValidationPipe } from '@nestjs/common';
+import { BadRequestException, ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { TransformInterceptor } from './core/response/transform.interceptor';
 import { HttpExceptionFilter } from './core/response/http-exception.filter';
@@ -9,7 +9,20 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.useGlobalFilters(new HttpExceptionFilter());
   app.useGlobalInterceptors(new TransformInterceptor());
-  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalPipes(
+    new ValidationPipe({
+      exceptionFactory(errors) {
+        return new BadRequestException({
+          code: 'FormValidationError',
+          message: 'Form validation failed.',
+          details: errors.map((e) => ({
+            field: e.property,
+            errors: Object.keys(e.constraints ?? {}),
+          })),
+        });
+      },
+    }),
+  );
 
   const config = new DocumentBuilder()
     .setTitle('syncpasta')
