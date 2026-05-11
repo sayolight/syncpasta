@@ -3,10 +3,11 @@ import { type Pasta } from "@/entities/pasta";
 import styles from "@/entities/pasta/ui/Pasta.module.scss";
 import { Input, Textarea } from "@ui/input";
 import { Button } from "@ui/button";
-import { useEditPasta } from "@/features/pasta/edit/model/useEditPasta.ts";
-import { Alert } from "@ui/alert";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useEditPasta } from "@/entities/pasta/api/useEditPasta.ts";
+import { useRemovePasta } from "@/entities/pasta/api/useRemovePasta.ts";
+import { ErrorAlert } from "@/widgets/error-alert/ui/ErrorAlert.tsx";
 
 interface EditPastaFormProps {
   isOpen: boolean;
@@ -20,7 +21,8 @@ export function EditPastaForm({
   pasta,
 }: EditPastaFormProps) {
   const { t } = useTranslation();
-  const { editPasta, removePasta, isLoading, error } = useEditPasta();
+  const { error, isPending, mutate: editMutate } = useEditPasta();
+  const { mutate: removeMutate } = useRemovePasta();
   const [keywords, setKeywords] = useState("");
   const [text, setText] = useState("");
 
@@ -29,13 +31,28 @@ export function EditPastaForm({
     setKeywords(pasta.keywords || "");
   }, [pasta]);
 
+  const onEditSubmit = () => {
+    editMutate(
+      { id: pasta.id, data: { keywords, text } },
+      {
+        onSuccess: () => setIsOpen(false),
+      },
+    );
+  };
+
+  const onRemoveSubmit = () => {
+    removeMutate(pasta.id, {
+      onSuccess: () => setIsOpen(false),
+    });
+  };
+
   return (
     <Modal
       title={t("pasta.edit.title")}
       active={isOpen}
       onClose={() => setIsOpen(false)}
     >
-      {error && <Alert title={"⚠ error!"}>{error}</Alert>}
+      <ErrorAlert error={error} fieldLocale={"pasta.edit"} />
       {pasta.file?.mimetype.split("/")[0] === "image" && (
         <img
           className={styles.pasta__media}
@@ -60,36 +77,22 @@ export function EditPastaForm({
           Your browser does not support the video tag.
         </video>
       )}
-      {/*<Input*/}
-      {/*  title={"text"}*/}
-      {/*  value={text}*/}
-      {/*  onChange={(e) => setText(e.target.value)}*/}
-      {/*  disabled={isLoading}*/}
-      {/*></Input>*/}
       <Textarea
         title={t("pasta.edit.text")}
         value={text}
         onChange={(e) => setText(e.target.value)}
-        disabled={isLoading}
+        disabled={isPending}
       ></Textarea>
       <Input
-        title={t("pasta.edit.keywords")}
+        title={t("pasta.edit.keywords.title")}
         value={keywords}
         onChange={(e) => setKeywords(e.target.value)}
-        disabled={isLoading}
+        disabled={isPending}
       ></Input>
-      <Button
-        variant={"primary"}
-        onClick={() => editPasta(pasta.id, { keywords, text })}
-        disabled={isLoading}
-      >
+      <Button variant={"primary"} onClick={onEditSubmit} disabled={isPending}>
         {t("pasta.edit.button.edit")}
       </Button>
-      <Button
-        variant={"warning"}
-        onClick={() => removePasta(pasta.id)}
-        disabled={isLoading}
-      >
+      <Button variant={"warning"} onClick={onRemoveSubmit} disabled={isPending}>
         {t("pasta.edit.button.delete")}
       </Button>
     </Modal>

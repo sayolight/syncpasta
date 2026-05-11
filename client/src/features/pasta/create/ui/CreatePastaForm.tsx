@@ -13,7 +13,6 @@ interface CreatePastaFormProps {
 
 export function CreatePastaForm({ isOpen, setIsOpen }: CreatePastaFormProps) {
   const { t } = useTranslation();
-  // const { createPasta, isLoading, error } = useCreatePasta();
   const { error, isPending, mutate } = useCreatePasta();
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

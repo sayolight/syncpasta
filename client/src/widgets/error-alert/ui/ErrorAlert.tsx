@@ -9,7 +9,7 @@ interface ErrorAlertProps {
     message: string;
 
     details: { field: string; errors: string[] }[];
-  };
+  } | null;
 }
 
 export function ErrorAlert({ error, fieldLocale }: ErrorAlertProps) {
