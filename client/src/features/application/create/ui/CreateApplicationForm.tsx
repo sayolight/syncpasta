@@ -1,12 +1,11 @@
 import { Modal } from "@ui/modal";
 import { Input } from "@ui/input";
 import { Button } from "@ui/button";
-import { Alert } from "@ui/alert";
 import * as React from "react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useCreateApplication } from "@/entities/application/api/useCreateApplication.ts";
-import { Typography } from "@/shared/ui";
+import { ErrorAlert } from "@/widgets/error-alert/ui/ErrorAlert.tsx";
 
 interface CreateApplicationFormProps {
   isOpen: boolean;
@@ -47,25 +46,7 @@ export function CreateApplicationForm({
         onClose={() => setIsOpen(false)}
         title={t("application.create.title")}
       >
-        {error && (
-          <Alert title={t(`error.${error.code}`)}>
-            {error.details.map((detail) => (
-              <Typography key={detail.field}>
-                {t("validation.field")}{" "}
-                <b>
-                  &#34;
-                  {t(`application.create.${detail.field}.title`)}&#34;
-                </b>
-                {detail.errors.map((e) => (
-                  <>
-                    <br />
-                    <span key={e}>- {t(`validation.${e}`)}</span>
-                  </>
-                ))}
-              </Typography>
-            ))}
-          </Alert>
-        )}
+        <ErrorAlert error={error} fieldLocale={"application.create"} />
         <Input
           title={t("application.create.name.title")}
           placeholder={t("application.create.name.placeholder")}
