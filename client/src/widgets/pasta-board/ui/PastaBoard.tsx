@@ -4,8 +4,12 @@ import { EditPastaForm } from "@/features/pasta";
 import { useState } from "react";
 import { usePastas } from "@/entities/pasta/api/usePastas.ts";
 
-export default function PastaBoard() {
-  const { data } = usePastas();
+interface PastaBoardProps {
+  query: string;
+}
+
+export default function PastaBoard({ query }: PastaBoardProps) {
+  const { data } = usePastas(query);
   const [editModal, setEditModal] = useState(false);
   const [currentPasta, setCurrentPasta] = useState<Pasta>();
 

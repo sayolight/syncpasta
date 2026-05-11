@@ -9,16 +9,17 @@ import { useTranslation } from "react-i18next";
 export default function GalleryPage() {
   const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
+  const [query, setQuery] = useState("");
 
   return (
     <Block isCard={false}>
       <Block>
-        <SearchPastaInput />
+        <SearchPastaInput query={query} setQuery={setQuery} />
         <Button variant={"primary"} onClick={() => setIsOpen(true)}>
           {t("pasta.create.button")}
         </Button>
       </Block>
-      <PastaBoard />
+      <PastaBoard query={query} />
       <CreatePastaForm isOpen={isOpen} setIsOpen={setIsOpen}></CreatePastaForm>
     </Block>
   );

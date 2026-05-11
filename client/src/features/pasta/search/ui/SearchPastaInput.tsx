@@ -1,14 +1,19 @@
 import { Input } from "@ui/input";
-import type { ChangeEvent } from "react";
-import { usePastaSearch } from "@/features/pasta/search/model/usePastaSearch.ts";
+import { type ChangeEvent } from "react";
 import { useTranslation } from "react-i18next";
+import { usePastas } from "@/entities/pasta/api/usePastas.ts";
 
-export function SearchPastaInput() {
-  const { pastaSearch } = usePastaSearch();
+interface SearchPastaInputProps {
+  query: string;
+  setQuery: (query: string) => void;
+}
+
+export function SearchPastaInput({ query, setQuery }: SearchPastaInputProps) {
+  usePastas(query);
   const { t } = useTranslation();
 
   const search = (e: ChangeEvent<HTMLInputElement>) => {
-    pastaSearch(e.target.value).then();
+    setQuery(e.target.value);
   };
 
   return (
