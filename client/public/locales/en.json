@@ -66,7 +66,10 @@
   },
   "error": {
     "FormValidationError": "form error!",
-    "NoTextOrFileProvided": "pasta must have text or a file"
+    "NoTextOrFileProvided": "pasta must have text or a file",
+    "auth/invalid-credential": "invalid login credentials were provided",
+    "auth/invalid-email": "invalid email was provided",
+    "auth/missing-password": "you haven't entered your password"
   },
   "header": {
     "account": "account",
