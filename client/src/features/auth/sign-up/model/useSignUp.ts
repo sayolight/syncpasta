@@ -1,27 +1,19 @@
-import { useState } from "react";
-import { FirebaseError } from "@firebase/app";
 import * as firebase from "@/shared/api/firebase";
-import { useNavigate } from "react-router";
+import { useMutation } from "@tanstack/react-query";
+
+async function signUp(data: {
+  email: string;
+  password: string;
+  confirmPassword: string;
+}) {
+  if (data.email && data.password && data.password !== data.confirmPassword) {
+    throw { code: "auth/passwords-dont-match" };
+  }
+  await firebase.signUp(data.email, data.password);
+}
 
 export function useSignUp() {
-  const [isLoading, setLoading] = useState(false);
-  const navigate = useNavigate();
-  const [error, setError] = useState<string | null>();
-
-  const signUp = async (data: { email: string; password: string }) => {
-    try {
-      setLoading(true);
-      await firebase.signUp(data.email, data.password);
-      setError(null);
-      navigate("/");
-    } catch (e) {
-      if (e instanceof FirebaseError) {
-        setError(e.code);
-      }
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  return { signUp, isLoading, error };
+  return useMutation({
+    mutationFn: signUp,
+  });
 }

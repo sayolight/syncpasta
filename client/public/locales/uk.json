@@ -67,9 +67,11 @@
   "error": {
     "FormValidationError": "помилка форми!",
     "NoTextOrFileProvided": "паста повинна мати текст або файл",
+    "auth/email-already-in-use": "ця електронна адреса вже використовується",
     "auth/invalid-credential": "введено недійсні облікові дані",
     "auth/invalid-email": "недійсна адреса електронної пошти",
-    "auth/missing-password": "ви не ввели свій пароль"
+    "auth/missing-password": "ви не ввели свій пароль",
+    "auth/passwords-dont-match": "паролі не збігаються"
   },
   "header": {
     "account": "акаунт",

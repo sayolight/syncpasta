@@ -67,9 +67,11 @@
   "error": {
     "FormValidationError": "form error!",
     "NoTextOrFileProvided": "pasta must have text or a file",
+    "auth/email-already-in-use": "this email address is already in use",
     "auth/invalid-credential": "invalid login credentials were provided",
     "auth/invalid-email": "invalid email was provided",
-    "auth/missing-password": "you haven't entered your password"
+    "auth/missing-password": "you haven't entered your password",
+    "auth/passwords-dont-match": "the passwords do not match"
   },
   "header": {
     "account": "account",
