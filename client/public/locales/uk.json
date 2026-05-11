@@ -65,7 +65,8 @@
     }
   },
   "error": {
-    "FormValidationError": "⚠ помилка форми!"
+    "FormValidationError": "помилка форми!",
+    "NoTextOrFileProvided": "паста повинна мати текст або файл"
   },
   "header": {
     "account": "акаунт",

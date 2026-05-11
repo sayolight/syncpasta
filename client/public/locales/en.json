@@ -65,7 +65,8 @@
     }
   },
   "error": {
-    "FormValidationError": "⚠ form error!"
+    "FormValidationError": "form error!",
+    "NoTextOrFileProvided": "pasta must have text or a file"
   },
   "header": {
     "account": "account",

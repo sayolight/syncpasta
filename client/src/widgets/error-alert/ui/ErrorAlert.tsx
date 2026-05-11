@@ -16,7 +16,7 @@ export function ErrorAlert({ error, fieldLocale }: ErrorAlertProps) {
   const { t } = useTranslation();
   return (
     error && (
-      <Alert title={t(`error.${error.code}`)}>
+      <Alert title={"⚠ " + t(`error.${error.code}`)}>
         {error.details?.map((detail) => (
           <Typography key={detail.field}>
             {t("validation.field")}{" "}

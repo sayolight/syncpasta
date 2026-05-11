@@ -1,9 +1,4 @@
-import {
-  BadRequestException,
-  Inject,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { Like, Repository } from 'typeorm';
 import { Pasta } from './entities/pasta.entity';
 import { CreatePastaDto } from './dto/create-pasta.dto';
@@ -12,6 +7,10 @@ import { UpdatePastaDto } from './dto/update-pasta.dto';
 import { ApplicationService } from '../applications/application.service';
 import { ApplicationLogType } from '../applications/entities/application-log.entity';
 import { Request } from 'express';
+import {
+  NoTextOrFileProvidedException,
+  PastaNotFoundException,
+} from './pasta.exceptions';
 
 @Injectable()
 export class PastaService {
@@ -47,7 +46,7 @@ export class PastaService {
     file?: Express.Multer.File,
   ) {
     if (!createPastaDto.text && !file) {
-      throw new BadRequestException('Pasta must have text or a file');
+      throw new NoTextOrFileProvidedException();
     }
 
     const storageFile =
@@ -102,7 +101,7 @@ export class PastaService {
     });
 
     if (!pasta) {
-      throw new NotFoundException('Pasta not found');
+      throw new PastaNotFoundException();
     }
 
     const updatedPasta = await this.pastaRepository.save({
