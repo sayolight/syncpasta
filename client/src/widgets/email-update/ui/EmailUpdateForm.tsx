@@ -4,16 +4,17 @@ import { useEmailUpdate } from "@/features/auth/email-update/model/useEmailUpdat
 import { useState } from "react";
 import { Alert } from "@ui/alert";
 import { useTranslation } from "react-i18next";
+import { ErrorAlert } from "@/widgets/error-alert/ui/ErrorAlert.tsx";
 
 export default function EmailUpdateForm() {
   const { t } = useTranslation();
-  const { emailUpdate, isLoading, error, success } = useEmailUpdate();
+  const { isPending, error, isSuccess, mutate } = useEmailUpdate();
   const [email, setEmail] = useState("");
 
   return (
     <>
-      {error && <Alert title={"⚠ error!"}>{error}</Alert>}
-      {success && (
+      <ErrorAlert error={error} />
+      {isSuccess && (
         <Alert title={"✔ success!"}>{t("account.email.update.success")}</Alert>
       )}
       <Input
@@ -22,7 +23,7 @@ export default function EmailUpdateForm() {
         value={email}
         onChange={(e) => setEmail(e.target.value)}
       />
-      <Button onClick={() => emailUpdate(email)} disabled={isLoading}>
+      <Button onClick={() => mutate(email)} disabled={isPending}>
         {t("account.email.update.title")}
       </Button>
     </>

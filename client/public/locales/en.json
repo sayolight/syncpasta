@@ -70,6 +70,7 @@
     "auth/email-already-in-use": "this email address is already in use",
     "auth/invalid-credential": "invalid login credentials were provided",
     "auth/invalid-email": "invalid email was provided",
+    "auth/invalid-new-email": "invalid email was provided",
     "auth/missing-password": "you haven't entered your password",
     "auth/passwords-dont-match": "the passwords do not match"
   },

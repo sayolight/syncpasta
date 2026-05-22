@@ -70,6 +70,7 @@
     "auth/email-already-in-use": "ця електронна адреса вже використовується",
     "auth/invalid-credential": "введено недійсні облікові дані",
     "auth/invalid-email": "недійсна адреса електронної пошти",
+    "auth/invalid-new-email": "недійсна адреса електронної пошти",
     "auth/missing-password": "ви не ввели свій пароль",
     "auth/passwords-dont-match": "паролі не збігаються"
   },
