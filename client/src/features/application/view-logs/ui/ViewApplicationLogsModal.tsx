@@ -1,11 +1,10 @@
 import { Modal } from "@ui/modal";
-import { Alert } from "@ui/alert";
-import { useEffect } from "react";
 import { useViewApplicationLogs } from "@/features/application/view-logs/model/useViewApplicationLogs.ts";
 import type { Application } from "@/entities/application";
 import { Timeline } from "@ui/timeline";
 import { Input } from "@ui/input";
 import { useTranslation } from "react-i18next";
+import { ErrorAlert } from "@/widgets/error-alert/ui/ErrorAlert.tsx";
 
 interface ViewApplicationLogsModalProps {
   isOpen: boolean;
@@ -19,11 +18,7 @@ export function ViewApplicationLogsModal({
   application,
 }: ViewApplicationLogsModalProps) {
   const { t } = useTranslation();
-  const { viewLogs, isLoading, error } = useViewApplicationLogs();
-
-  useEffect(() => {
-    viewLogs(application.id).then();
-  }, []);
+  const { error, isPending, data } = useViewApplicationLogs(application.id);
 
   return (
     <Modal
@@ -31,19 +26,21 @@ export function ViewApplicationLogsModal({
       active={isOpen}
       onClose={() => setIsOpen(false)}
     >
-      {error && <Alert title={"⚠ error!"}>{error}</Alert>}
-      {isLoading ?? "loading..."}
-      <Timeline
-        timeline={application.logs?.map((log) => ({
-          date: new Date(log.createdAt),
-          content: (
-            <>
-              {log.type}
-              <Input value={JSON.stringify(log.meta)}></Input>
-            </>
-          ),
-        }))}
-      ></Timeline>
+      <ErrorAlert error={error} />
+      {isPending && "loading..."}
+      {data && (
+        <Timeline
+          timeline={data.map((log) => ({
+            date: new Date(log.createdAt),
+            content: (
+              <>
+                {log.type}
+                <Input value={JSON.stringify(log.meta)}></Input>
+              </>
+            ),
+          }))}
+        ></Timeline>
+      )}
     </Modal>
   );
 }

@@ -1,33 +1,17 @@
-import { useState } from "react";
-import { AxiosError } from "axios";
 import { http } from "@/shared/api/https.ts";
-import {
-  type ApplicationLogs,
-} from "@/entities/application";
+import { type ApplicationLogs } from "@/entities/application";
+import { useQuery } from "@tanstack/react-query";
 
-export function useViewApplicationLogs() {
-  const [isLoading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>();
+async function viewApplicationLogs(applicationId: string) {
+  const response = await http.get<ApplicationLogs[]>(
+    "/applications/" + applicationId + "/logs",
+  );
+  return response.data;
+}
 
-  const viewLogs = async (applicationId: string) => {
-    try {
-      setLoading(true);
-      setError(null);
-      const logs = await http.get<ApplicationLogs[]>(
-        "/applications/" + applicationId + "/logs",
-      );
-      // update({
-      //   id: applicationId,
-      //   logs: logs.data,
-      // });
-    } catch (e) {
-      if (e instanceof AxiosError) {
-        setError(e.name);
-      }
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  return { viewLogs, isLoading, error };
+export function useViewApplicationLogs(applicationId: string) {
+  return useQuery({
+    queryKey: ["applicationLogs", applicationId],
+    queryFn: () => viewApplicationLogs(applicationId),
+  });
 }
