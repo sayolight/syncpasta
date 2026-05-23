@@ -7,7 +7,7 @@ export default defineConfig({
   plugins: [react()],
   server: {
     port: 80,
-    allowedHosts: [process.env.APP_URL ?? "localhost"],
+    allowedHosts: [process.env.APP_HOST ?? "localhost"],
   },
   resolve: {
     alias: {

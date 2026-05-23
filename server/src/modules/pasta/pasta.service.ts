@@ -11,6 +11,7 @@ import {
   NoTextOrFileProvidedException,
   PastaNotFoundException,
 } from './pasta.exceptions';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class PastaService {
@@ -19,6 +20,7 @@ export class PastaService {
     private readonly pastaRepository: Repository<Pasta>,
     private readonly storageService: StorageService,
     private readonly applicationService: ApplicationService,
+    private configService: ConfigService,
   ) {}
 
   async findByUser(req: Request, query?: string) {
@@ -37,7 +39,7 @@ export class PastaService {
         .catch(() => {});
     }
 
-    return findRequest;
+    return this.fullFileUrl(findRequest);
   }
 
   async create(
@@ -89,7 +91,7 @@ export class PastaService {
         })
         .catch(() => {});
     }
-    return createRequest;
+    return this.fullFileUrl(createRequest);
   }
 
   async update(id: number, req: Request, updatePastaDto: UpdatePastaDto) {
@@ -123,7 +125,7 @@ export class PastaService {
         .catch(() => {});
     }
 
-    return updatedPasta;
+    return this.fullFileUrl(updatedPasta);
   }
 
   async remove(id: number, req: Request) {
@@ -143,5 +145,27 @@ export class PastaService {
     }
 
     return removeRequest.affected;
+  }
+
+  private fullFileUrl(data: Pasta | Pasta[]) {
+    const appUrl =
+      this.configService.get<string>('APP_URL') || 'http://localhost/api';
+
+    const mapPasta = (pasta: Pasta) => {
+      if (!pasta.file) return pasta;
+      return {
+        ...pasta,
+        file: {
+          ...pasta.file,
+          url: `${appUrl}${pasta.file?.url}`,
+        },
+      };
+    };
+
+    if (Array.isArray(data)) {
+      return data.map(mapPasta);
+    }
+
+    return mapPasta(data);
   }
 }

@@ -20,7 +20,7 @@ services:
       context: ./client
       dockerfile: Dockerfile.dev
     environment:
-      - APP_URL=${APP_URL}
+      - APP_HOST=${APP_HOST}
     volumes:
       - ./client:/app
     depends_on:
