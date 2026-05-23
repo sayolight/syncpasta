@@ -19,11 +19,12 @@ services:
     build:
       context: ./client
       dockerfile: Dockerfile.dev
+    environment:
+      - APP_URL=${APP_URL}
     volumes:
       - ./client:/app
     depends_on:
       - server
-#      - firebase
 
   db:
     container_name: syncpasta-db
@@ -36,18 +37,6 @@ services:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB}
-
-#  firebase:
-#    container_name: syncpasta-firebase
-#    environment:
-#      FIREBASE_PROJECT_ID: ${FIREBASE_PROJECT_ID}
-#    build:
-#      context: ./firebase
-#      dockerfile: Dockerfile
-#    ports:
-#      - "4000:4000"
-#      - "9099:9099"
-#      - "4500:4500"
 
   s3:
     container_name: syncpasta-s3
@@ -74,20 +63,30 @@ services:
       - server
       - s3
 
-  ngrok:
-    container_name: syncpasta-ngrok
-    image: ngrok/ngrok:latest
-    command:
-      - "http"
-      - "nginx:80"
-      - "--url"
-      - ${NGROK_DOMAIN}
-    ports:
-      - 4040:4040
-    environment:
-      - NGROK_AUTHTOKEN=${NGROK_TOKEN}
+#  ngrok:
+#    container_name: syncpasta-ngrok
+#    image: ngrok/ngrok:latest
+#    command:
+#      - "http"
+#      - "nginx:80"
+#      - "--url"
+#      - ${NGROK_DOMAIN}
+#    ports:
+#      - 4040:4040
+#    environment:
+#      - NGROK_AUTHTOKEN=${NGROK_TOKEN}
+#    depends_on:
+#      - nginx
+
+  cloudflared:
+    container_name: syncpasta-cloudflared
+    image: cloudflare/cloudflared
+    command: tunnel --config /etc/cloudflared/config.yml run
+    volumes:
+      - ./cloudflared:/etc/cloudflared
     depends_on:
       - nginx
+
 
 volumes:
   db_data:

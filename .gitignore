@@ -4,3 +4,5 @@
 .env.dev
 
 client-old
+
+/cloudflared/

@@ -7,7 +7,7 @@ export default defineConfig({
   plugins: [react()],
   server: {
     port: 80,
-    allowedHosts: ["mature-inherently-dory.ngrok-free.app"],
+    allowedHosts: [process.env.APP_URL ?? "localhost"],
   },
   resolve: {
     alias: {
