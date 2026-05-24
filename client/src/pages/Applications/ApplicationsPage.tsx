@@ -5,11 +5,12 @@ import { ApplicationCard } from "@/widgets/application-card/ui/ApplicationCard.t
 import { type Application, useApplications } from "@/entities/application";
 import { CreateApplicationForm } from "@/features/application/create/ui/CreateApplicationForm.tsx";
 import { useTranslation } from "react-i18next";
+import { Loader } from "@ui/loader";
 
 export default function ApplicationsPage() {
   const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
-  const { data } = useApplications();
+  const { isPending, data } = useApplications();
 
   return (
     <>
@@ -18,6 +19,7 @@ export default function ApplicationsPage() {
           {t("application.create.button")}
         </Button>
 
+        <Loader isPending={isPending} />
         {data?.map((application: Application) => (
           <ApplicationCard
             key={application.id}

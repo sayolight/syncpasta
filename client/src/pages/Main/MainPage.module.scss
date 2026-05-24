@@ -1,0 +1,37 @@
+@use '@styles/colors';
+
+.main_page_block {
+  padding: 1rem 2rem;
+}
+
+.image_box {
+  filter: drop-shadow(0 0 0.3rem #96B8A1);
+  align-self: center;
+}
+
+.view_button {
+  width: 100%;
+}
+
+.main_parallel_block {
+  @media screen and (min-width: 1200px) {
+    width: 100%;
+  }
+}
+
+.welcome_block {
+  @media screen and (min-width: 1200px) {
+    .text_block {
+      max-width: 600px;
+    }
+
+    .get_started {
+      margin-top: 3rem;
+    }
+  }
+
+  div {
+    display: flex;
+    justify-content: space-around;
+  }
+}

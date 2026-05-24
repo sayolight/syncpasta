@@ -100,6 +100,10 @@
         "value": "funny cat gif"
       }
     },
+    "synchronize": {
+      "description": "between any apps",
+      "header": "synchronize"
+    },
     "welcome": {
       "description": "a service for synchronizing text and media files between any applications.",
       "get_started": "get started",

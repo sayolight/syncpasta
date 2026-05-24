@@ -16,6 +16,11 @@
     filter: brightness(60%);
   }
 
+  &.large {
+    padding: 1rem;
+    border-radius: 0.25rem;
+  }
+
   &.primary {
     background: colors.$accent;
     color: colors.$text-on-color;
