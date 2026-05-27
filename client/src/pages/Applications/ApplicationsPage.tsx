@@ -6,6 +6,7 @@ import { type Application, useApplications } from "@/entities/application";
 import { CreateApplicationForm } from "@/features/application/create/ui/CreateApplicationForm.tsx";
 import { useTranslation } from "react-i18next";
 import { Loader } from "@ui/loader";
+import { Illustration } from "@ui/illustration";
 
 export default function ApplicationsPage() {
   const { t } = useTranslation();
@@ -20,6 +21,9 @@ export default function ApplicationsPage() {
         </Button>
 
         <Loader isPending={isPending} />
+        {data?.length === 0 && !isPending && (
+          <Illustration image={"empty"} title={t("application.list.empty")} />
+        )}
         {data?.map((application: Application) => (
           <ApplicationCard
             key={application.id}
