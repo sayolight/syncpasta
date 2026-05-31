@@ -4,9 +4,12 @@ import { BadRequestException, ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { TransformInterceptor } from './core/response/transform.interceptor';
 import { HttpExceptionFilter } from './core/response/http-exception.filter';
+import { PastaController } from './modules/pasta/pasta.controller';
+import { PastaModule } from './modules/pasta/pasta.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  app.setGlobalPrefix('api');
   app.useGlobalFilters(new HttpExceptionFilter());
   app.useGlobalInterceptors(new TransformInterceptor());
   app.useGlobalPipes(
@@ -28,9 +31,21 @@ async function bootstrap() {
     .setTitle('syncpasta')
     .setDescription('syncpasta api docs')
     .setVersion('dev')
+    .addApiKey(
+      {
+        in: 'header',
+        type: 'apiKey',
+        name: 'Authorization',
+        description: 'ApiKey YOUR_API_KEY',
+      },
+      'ApiKey',
+    )
     .build();
-  const documentFactory = () => SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('docs', app, documentFactory, {
+  const documentFactory = () =>
+    SwaggerModule.createDocument(app, config, {
+      include: [PastaModule],
+    });
+  SwaggerModule.setup('api/docs', app, documentFactory, {
     customCssUrl: '/swagger.css',
   });
   await app.listen(process.env.PORT ?? 80);

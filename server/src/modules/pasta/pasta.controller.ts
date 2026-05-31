@@ -19,14 +19,21 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { AnyAuthGuard } from '../auth/any-auth.guard';
 import { FileValidationPipe } from '../../core/storage/file-validation.pipe';
 import { UpdatePastaDto } from './dto/update-pasta.dto';
+import { ApiQuery, ApiSecurity } from '@nestjs/swagger';
 
+@ApiSecurity('ApiKey')
 @UseGuards(AnyAuthGuard)
 @Controller('pasta')
 export class PastaController {
   constructor(private readonly pastaService: PastaService) {}
 
+  @ApiQuery({
+    name: 'query',
+    required: false,
+    type: String,
+  })
   @Get()
-  async findByUser(@Req() req: Request, @Query('query') query: string) {
+  async findByUser(@Req() req: Request, @Query('query') query?: string) {
     return await this.pastaService.findByUser(req, query);
   }
 
