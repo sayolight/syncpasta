@@ -46,7 +46,7 @@ export class PastaService {
     req: Request,
     createPastaDto: CreatePastaDto,
     file?: Express.Multer.File,
-  ) {
+  ): Promise<Pasta> {
     if (!createPastaDto.text && !file) {
       throw new NoTextOrFileProvidedException();
     }
@@ -147,6 +147,8 @@ export class PastaService {
     return removeRequest.affected;
   }
 
+  private fullFileUrl(data: Pasta): Pasta;
+  private fullFileUrl(data: Pasta[]): Pasta[];
   private fullFileUrl(data: Pasta | Pasta[]) {
     const appUrl =
       this.configService.get<string>('APP_URL') || 'http://localhost/api';
