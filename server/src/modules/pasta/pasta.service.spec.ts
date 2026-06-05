@@ -135,7 +135,6 @@ describe('PastaService', () => {
         Key: 'file.png',
       });
 
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       pastaRepositoryMock.create.mockImplementation((x) => x);
 
       pastaRepositoryMock.save.mockResolvedValue({
