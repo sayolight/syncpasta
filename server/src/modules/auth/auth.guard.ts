@@ -12,6 +12,7 @@ import {
   InvalidTokenException,
   UnauthorizedException,
 } from './auth.exceptions';
+import { FirebaseError } from 'firebase-admin';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -33,7 +34,7 @@ export class AuthGuard implements CanActivate {
     const decodedToken = await this.firebaseAdmin
       .auth()
       .verifyIdToken(token)
-      .catch((err) => {
+      .catch((err: FirebaseError) => {
         if (err.code === 'auth/id-token-expired') {
           throw new IdTokenExpiredException();
         }
