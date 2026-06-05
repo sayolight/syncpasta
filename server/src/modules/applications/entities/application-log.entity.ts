@@ -19,7 +19,9 @@ export class ApplicationLog {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => Application, (application) => application.logs)
+  @ManyToOne(() => Application, (application) => application.logs, {
+    onDelete: 'CASCADE',
+  })
   application: Application;
 
   @Column({
