@@ -4,6 +4,8 @@ $timeline: colors.$text--muted;
 
 .timeline {
   color: $timeline;
+  overflow: scroll;
+  max-height: 80vh;
 
   &__item {
     display: flex;
