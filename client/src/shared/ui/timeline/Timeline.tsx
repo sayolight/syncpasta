@@ -4,6 +4,7 @@ import { Typography } from "@/shared/ui";
 
 interface TimelineData {
   date: Date;
+  action?: string;
   content: React.ReactNode;
 }
 
@@ -24,6 +25,8 @@ export function Timeline({ timeline, ...props }: TimelineProps) {
             >
               {timeline.date.toLocaleDateString()}{" "}
               {timeline.date.toLocaleTimeString()}
+              {" — "}
+              {timeline.action}
             </Typography>
             <Typography
               className={styles.timeline__item__content}

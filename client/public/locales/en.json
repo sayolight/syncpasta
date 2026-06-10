@@ -38,6 +38,11 @@
     },
     "logs": {
       "button": "view logs",
+      "pasta_create": "pasta created",
+      "pasta_delete": "pasta deleted",
+      "pasta_query": "search query",
+      "pasta_update": "pasta updated",
+      "result_count": "number of results",
       "title": "logs"
     }
   },

@@ -8,20 +8,16 @@ $timeline: colors.$text--muted;
   max-height: 80vh;
 
   &__item {
+    background: colors.$surface-2;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    margin: 0.5rem 0;
+
     display: flex;
     flex-direction: column;
 
-    padding-bottom: 0.5rem;
-
     &:last-child {
       padding-bottom: 0;
-    }
-
-    &__date::before {
-      content: "│";
-    }
-    &__content::before {
-      content: "└─ ";
     }
   }
 }
