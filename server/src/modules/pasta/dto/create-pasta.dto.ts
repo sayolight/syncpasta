@@ -12,6 +12,8 @@ export class CreatePastaDto {
 
   @ApiPropertyOptional({
     type: 'file',
+    description:
+      'image/png; image/jpeg; image/webp; image/gif; video/mp4; video/webm.',
   })
   file?: never;
 }
