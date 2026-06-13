@@ -3,6 +3,8 @@ import {
   Controller,
   Delete,
   Get,
+  HttpCode,
+  HttpStatus,
   Param,
   Patch,
   Post,
@@ -19,7 +21,14 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { AnyAuthGuard } from '../auth/any-auth.guard';
 import { FileValidationPipe } from '../../core/storage/file-validation.pipe';
 import { UpdatePastaDto } from './dto/update-pasta.dto';
-import { ApiQuery, ApiSecurity } from '@nestjs/swagger';
+import {
+  ApiBody,
+  ApiConsumes,
+  ApiOperation,
+  ApiQuery,
+  ApiResponse,
+  ApiSecurity,
+} from '@nestjs/swagger';
 
 @ApiSecurity('ApiKey')
 @UseGuards(AnyAuthGuard)
@@ -27,6 +36,11 @@ import { ApiQuery, ApiSecurity } from '@nestjs/swagger';
 export class PastaController {
   constructor(private readonly pastaService: PastaService) {}
 
+  @ApiOperation({ summary: "Get user's pasta list" })
+  @ApiResponse({
+    status: 200,
+    description: 'OK',
+  })
   @ApiQuery({
     name: 'query',
     required: false,
@@ -37,6 +51,12 @@ export class PastaController {
     return await this.pastaService.findByUser(req, query);
   }
 
+  @ApiOperation({ summary: 'Create a new pasta' })
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({ type: CreatePastaDto })
+  @ApiResponse({ status: 201, description: 'Pasta created' })
+  @ApiResponse({ status: 400, description: 'No text or file provided' })
+  @HttpCode(HttpStatus.CREATED)
   @Post()
   @UseInterceptors(FileInterceptor('file'))
   async create(
@@ -47,6 +67,10 @@ export class PastaController {
     return await this.pastaService.create(req, createPastaDto, file);
   }
 
+  @ApiOperation({ summary: 'Update an existing pasta' })
+  @ApiBody({ type: UpdatePastaDto })
+  @ApiResponse({ status: 200, description: 'OK' })
+  @ApiResponse({ status: 404, description: 'Pasta does not exist' })
   @Patch(':id')
   async edit(
     @Param('id') id: string,
@@ -56,6 +80,8 @@ export class PastaController {
     return await this.pastaService.update(+id, req, updatePastaDto);
   }
 
+  @ApiOperation({ summary: 'Remove an existing pasta' })
+  @ApiResponse({ status: 200, description: 'OK' })
   @Delete(':id')
   async remove(@Req() req: Request, @Param('id') id: string) {
     return await this.pastaService.remove(+id, req);
