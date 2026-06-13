@@ -1,12 +1,17 @@
 import { IsNotEmpty, IsOptional } from 'class-validator';
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 export class CreatePastaDto {
   @ApiProperty()
   @IsNotEmpty()
   keywords: string;
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   @IsOptional()
   text?: string;
+
+  @ApiPropertyOptional({
+    type: 'file',
+  })
+  file?: never;
 }
