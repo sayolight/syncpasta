@@ -2,6 +2,7 @@ import { Input } from "@ui/input";
 import { type ChangeEvent } from "react";
 import { useTranslation } from "react-i18next";
 import { usePastas } from "@/entities/pasta/api/usePastas.ts";
+import { useDebouncedCallback } from "use-debounce";
 
 interface SearchPastaInputProps {
   query: string;
@@ -12,9 +13,13 @@ export function SearchPastaInput({ query, setQuery }: SearchPastaInputProps) {
   usePastas(query);
   const { t } = useTranslation();
 
-  const search = (e: ChangeEvent<HTMLInputElement>) => {
-    setQuery(e.target.value);
-  };
+  const search = useDebouncedCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      setQuery(e.target.value);
+    },
+    500,
+    { maxWait: 1000 },
+  );
 
   return (
     <Input
