@@ -4,7 +4,6 @@ import { BadRequestException, ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { TransformInterceptor } from './core/response/transform.interceptor';
 import { HttpExceptionFilter } from './core/response/http-exception.filter';
-import { PastaController } from './modules/pasta/pasta.controller';
 import { PastaModule } from './modules/pasta/pasta.module';
 
 async function bootstrap() {
@@ -12,6 +11,9 @@ async function bootstrap() {
   app.setGlobalPrefix('api');
   app.useGlobalFilters(new HttpExceptionFilter());
   app.useGlobalInterceptors(new TransformInterceptor());
+  app.enableCors({
+    origin: true,
+  });
   app.useGlobalPipes(
     new ValidationPipe({
       exceptionFactory(errors) {
