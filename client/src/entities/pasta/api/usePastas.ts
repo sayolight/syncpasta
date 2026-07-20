@@ -1,10 +1,10 @@
 import { http } from "@/shared/api/https.ts";
-import { useQuery } from "@tanstack/react-query";
-import type { Pasta } from "@/entities/pasta";
+import { useInfiniteQuery } from "@tanstack/react-query";
 
-async function fetchPastas(query?: string): Promise<Pasta[]> {
-  const response = await http.get<Pasta[]>(`/pasta`, {
+async function fetchPastas(offset: number, query?: string) {
+  const response = await http.get(`/pasta`, {
     params: {
+      offset,
       query,
     },
   });
@@ -12,8 +12,10 @@ async function fetchPastas(query?: string): Promise<Pasta[]> {
 }
 
 export function usePastas(query?: string) {
-  return useQuery({
+  return useInfiniteQuery({
     queryKey: ["pastas", query],
-    queryFn: () => fetchPastas(query),
+    initialPageParam: 0,
+    queryFn: ({ pageParam }) => fetchPastas(pageParam, query),
+    getNextPageParam: (lastPage) => lastPage.pagination.nextOffset,
   });
 }

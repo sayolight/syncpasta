@@ -2,11 +2,13 @@ import { User } from 'src/modules/users/entities/user.entity';
 import { File } from './file.entity';
 import {
   Column,
+  CreateDateColumn,
   Entity,
   JoinColumn,
   ManyToOne,
   OneToOne,
   PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 
 @Entity()
@@ -30,4 +32,10 @@ export class Pasta {
   })
   @JoinColumn()
   file?: File;
+
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt: Date;
 }

@@ -13,6 +13,8 @@ import {
 } from './pasta.exceptions';
 import { ConfigService } from '@nestjs/config';
 
+const TAKE_LIMIT = 30;
+
 @Injectable()
 export class PastaService {
   constructor(
@@ -23,10 +25,17 @@ export class PastaService {
     private configService: ConfigService,
   ) {}
 
-  async findByUser(req: Request, query?: string) {
-    const findRequest = await this.pastaRepository.findBy({
-      owner: { uid: req.user!.uid },
-      ...(query ? { keywords: Like(`%${query}%`) } : {}),
+  async findByUser(req: Request, offset: number, query?: string) {
+    const [pastas, total] = await this.pastaRepository.findAndCount({
+      where: {
+        owner: { uid: req.user?.uid },
+        ...(query ? { keywords: Like(`%${query}%`) } : {}),
+      },
+      order: {
+        updatedAt: 'DESC',
+      },
+      take: TAKE_LIMIT,
+      skip: offset,
     });
 
     if (req.application) {
@@ -34,12 +43,20 @@ export class PastaService {
         .createLog({
           applicationId: req.application.id,
           type: ApplicationLogType.PASTA_QUERY,
-          meta: { query, results_count: findRequest.length },
+          meta: { query, results_count: total },
         })
         .catch(() => {});
     }
 
-    return this.fullFileUrl(findRequest);
+    return {
+      items: this.fullFileUrl(pastas),
+      pagination: {
+        total,
+        limit: TAKE_LIMIT,
+        offset: offset,
+        nextOffset: total > offset + TAKE_LIMIT ? offset + TAKE_LIMIT : null,
+      },
+    };
   }
 
   async create(

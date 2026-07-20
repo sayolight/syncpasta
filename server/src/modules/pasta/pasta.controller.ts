@@ -6,6 +6,7 @@ import {
   HttpCode,
   HttpStatus,
   Param,
+  ParseIntPipe,
   Patch,
   Post,
   Query,
@@ -47,8 +48,12 @@ export class PastaController {
     type: String,
   })
   @Get()
-  async findByUser(@Req() req: Request, @Query('query') query?: string) {
-    return await this.pastaService.findByUser(req, query);
+  async findByUser(
+    @Req() req: Request,
+    @Query('query') query?: string,
+    @Query('offset', ParseIntPipe) offset: number = 0,
+  ) {
+    return await this.pastaService.findByUser(req, offset, query);
   }
 
   @ApiOperation({ summary: 'Create a new pasta' })
