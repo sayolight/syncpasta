@@ -1,5 +1,4 @@
 import { type Pasta, PastaCard } from "@/entities/pasta";
-import styles from "./PastaBoard.module.scss";
 import { EditPastaForm } from "@/features/pasta";
 import { useState } from "react";
 import { usePastas } from "@/entities/pasta/api/usePastas.ts";
@@ -7,6 +6,7 @@ import { Loader } from "@ui/loader";
 import { Illustration } from "@ui/illustration";
 import { useTranslation } from "react-i18next";
 import InfiniteScroll from "react-infinite-scroll-component";
+import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 
 interface PastaBoardProps {
   query: string;
@@ -45,15 +45,24 @@ export default function PastaBoard({ query }: PastaBoardProps) {
         hasMore={hasNextPage}
         loader={<Loader isPending={isFetchingNextPage} />}
       >
-        <div className={styles.pasta_board}>
-          {pastas.map((pasta) => (
-            <PastaCard
-              onClick={() => openEditModal(pasta)}
-              pasta={pasta}
-              key={pasta.id}
-            />
-          ))}
-        </div>
+        <ResponsiveMasonry
+          columnsCountBreakPoints={{
+            0: 1,
+            500: 2,
+            700: 3,
+            900: 4,
+          }}
+        >
+          <Masonry>
+            {pastas.map((pasta) => (
+              <PastaCard
+                onClick={() => openEditModal(pasta)}
+                pasta={pasta}
+                key={pasta.id}
+              />
+            ))}
+          </Masonry>
+        </ResponsiveMasonry>
       </InfiniteScroll>
     </>
   );

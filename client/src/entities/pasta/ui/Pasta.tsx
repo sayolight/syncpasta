@@ -20,13 +20,7 @@ export function PastaCard({ pasta, onClick }: PastaProps) {
       )}
       {pasta.file?.mimetype.split("/")[0] === "video" && (
         // eslint-disable-next-line jsx-a11y/media-has-caption
-        <video
-          controls
-          style={{
-            maxWidth: "100%",
-            maxHeight: "80vh",
-          }}
-        >
+        <video controls className={styles.pasta__media}>
           <source src={pasta.file.url} type={pasta.file.mimetype} />
           Your browser does not support the video tag.
         </video>
